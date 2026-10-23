@@ -59,6 +59,7 @@
   --font-display: "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --font-pixel: "Silkscreen", ui-monospace, "Courier New", monospace;
   --a11y-bg: var(--ink); --a11y-ink: var(--bg);
+  --pink-text: #c2415a;   /* pink for text on the pale sky: 4.7:1 */
   --c-maya: #a8394a; --c-ben: #2558a8; --c-noa: #5f3fb8;   /* friends' names, AA on the bubbles */
 }
 /* accessibility: skip link, the link to the accessible version; ambient motion rests after 5 s */
@@ -82,7 +83,7 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
     --butter: #fdd66c; --pink: #f2b0c4; --mint: #bfe5d4; --lav: #a688e2;
     --phone: #0f0d22; --screen: #1b1932; --bubble-in: #2d2950; --bubble-out: #34555a;
     --private: #3a2f6a; --private-ink: #d9c8ff; --line: rgba(247, 238, 216, .12); --shadow: rgba(0, 0, 0, .55);
-    --c-maya: #fcb4b6; --c-ben: #a9cdfe; --c-noa: #d6c5f7;
+    --c-maya: #fcb4b6; --c-ben: #a9cdfe; --c-noa: #d6c5f7; --pink-text: #f2b0c4;
     color-scheme: dark;
   }
 }
@@ -91,7 +92,7 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
   --butter: #fdd66c; --pink: #f2b0c4; --mint: #bfe5d4; --lav: #a688e2;
   --phone: #0f0d22; --screen: #1b1932; --bubble-in: #2d2950; --bubble-out: #34555a;
   --private: #3a2f6a; --private-ink: #d9c8ff; --line: rgba(247, 238, 216, .12); --shadow: rgba(0, 0, 0, .55);
-  --c-maya: #fcb4b6; --c-ben: #a9cdfe; --c-noa: #d6c5f7;
+  --c-maya: #fcb4b6; --c-ben: #a9cdfe; --c-noa: #d6c5f7; --pink-text: #f2b0c4;
   color-scheme: dark;
 }
 /* which artwork shows in which look */
@@ -128,7 +129,7 @@ button { font: inherit; color: inherit; }
 
 /* header */
 .top {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  position: absolute; top: 0; left: 0; right: 0; z-index: 50;  /* stays at the top of the page, not pinned while scrolling */
   padding-top: calc(env(safe-area-inset-top, 0px) + 12px); padding-bottom: 12px;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
@@ -295,7 +296,7 @@ main { position: relative; z-index: 10; }
 }
 .say::after { content: ""; position: absolute; left: 50%; bottom: -12px; width: 12px; height: 12px; background: var(--ink); clip-path: polygon(0 0, 100% 0, 0 100%); }
 .soon h2 { margin: 0; font-size: clamp(48px, 9vw, 120px); font-weight: 900; letter-spacing: -.04em; line-height: .95; }
-.soon h2 span { color: var(--pink); }
+.soon h2 span { color: var(--pink-text); }
 .soon p { margin: 0; color: var(--ink-2); max-width: 34ch; }
 .soon .stores { justify-content: center; }
 .maker { font-family: var(--font-pixel); font-size: 12px; text-decoration: none; border-bottom: 2px solid var(--lav); padding-bottom: 2px; }
@@ -325,6 +326,18 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   .tile b { font-size: 19px; }
   .tile small { font-size: 11px; }
   .tile.wild { grid-column: 1 / -1; min-height: 0; }
+  /* "How it works" on phones: three still screens in the normal flow */
+  .story { height: auto; display: block; padding-block: 56px 24px; }
+  .steps { min-height: 0; display: block; margin-bottom: 20px; }
+  .story .steps .eyebrow { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; }
+  .mstory { display: grid; gap: 48px; }
+  .mstep { display: grid; gap: 16px; justify-items: center; }
+  .story .mstep .step { position: static; opacity: 1; justify-self: stretch; }
+  .story .mstep .phone { --w: min(240px, 66vw); }
+  .mstep .bits, .mstep .typing { display: none; }
+  .state-1 .s3, .state-1 .private, .state-3 .private { display: none; }
+  .state-2 .private { transform: none; }
+  .state-3 .msgs .s1:first-child { display: none; }
   .shelf-nav { display: none; }
   .track { cursor: auto; user-select: auto; }
   .story { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: start; gap: 12px; padding-block: calc(env(safe-area-inset-top, 0px) + 72px) 16px; }
@@ -358,7 +371,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   </a>
   <div class="top-actions">
     <button class="theme" id="theme" type="button" aria-label="Switch between light and dark"><i class="moon for-light"></i><i class="sun for-dark"></i></button>
-    <a class="a11y-link" href="accessible.html"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="4.2" r="2.2"/><path d="M4 7.6l8 1.2 8-1.2.4 2-5.6 1.2v3.4l2.4 7.6-2 .6-3.2-6.8-3.2 6.8-2-.6 2.4-7.6v-3.4L3.6 9.6z"/></svg><span>Accessible version</span></a>
+    <a class="a11y-link" href="accessible.html"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="4.2" r="2.2"/><path d="M4 7.6l8 1.2 8-1.2.4 2-5.6 1.2v3.4l2.4 7.6-2 .6-3.2-6.8-3.2 6.8-2-.6 2.4-7.6v-3.4L3.6 9.6z"/></svg><span>Accessible Version</span></a>
   </div>
 </header>
 
@@ -711,6 +724,25 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     return { side: dir => { fresh = true; side(dir); } };
   }
 
+  // ---------- phones: simple ----------
+  // On a phone the page scrolls natively and nothing is pinned. "How it works" is three still screens
+  // (the chat, the private ask with the finished app, the shared vote), each under its caption.
+  const phoneLayout = matchMedia('(max-width: 860px)').matches;
+  if (phoneLayout) {
+    const src = document.getElementById('storyPhone');
+    const list = document.createElement('div'); list.className = 'mstory';
+    [...document.querySelectorAll('#story .step')].forEach((step, i) => {
+      const item = document.createElement('div'); item.className = 'mstep';
+      const shot = src.cloneNode(true);
+      shot.removeAttribute('id'); shot.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
+      shot.classList.add('state-' + (i + 1));
+      if (i === 1) shot.querySelectorAll('[hidden]').forEach(e => { e.hidden = false; });
+      if (i === 2) shot.querySelectorAll('.opt[data-v]').forEach(o => o.style.setProperty('--v', o.dataset.v + '%'));
+      item.append(step, shot); list.append(item);
+    });
+    src.replaceWith(list);
+  }
+
   // ---------- scroll ----------
   gsap.registerPlugin(ScrollTrigger);
   const mm = gsap.matchMedia();
@@ -718,10 +750,23 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   // resting state for reduced motion: the shared vote with its results
   const fillVotes = () => document.querySelectorAll('#sharedCard .opt').forEach(o => o.style.setProperty('--v', o.dataset.v + '%'));
 
-  mm.add('(prefers-reduced-motion: reduce)', () => { fillVotes(); gsap.set('#private', { display: 'none' }); });
+  mm.add('(prefers-reduced-motion: reduce)', () => { if (phoneLayout) return; fillVotes(); gsap.set('#private', { display: 'none' }); });
 
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     const narrow = innerWidth <= 860;
+    if (phoneLayout) {
+      const p2 = document.querySelector('#phones .p2');
+      gsap.set(p2, { x: 0, y: 0, xPercent: -50, yPercent: -52 });
+      gsap.from('.hero-copy > *', { y: 20, opacity: 0, duration: .6, ease: 'power3.out', stagger: .06 });
+      gsap.from(p2, { y: 40, opacity: 0, duration: .8, ease: 'power3.out', delay: .2 });
+      gsap.utils.toArray('.mstep, .tile').forEach(el => gsap.from(el, { y: 24, opacity: 0, duration: .5, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 92%', once: true } }));
+      gsap.timeline({ scrollTrigger: { trigger: '#soon', start: 'top 80%', once: true } })
+        .from('#llama', { y: -120, opacity: 0, duration: .7, ease: 'bounce.out' })
+        .from('#say', { scale: 0, duration: .4, ease: 'back.out(3)' }, '-=.2');
+      loop(gsap.to('#llama', { scaleY: 1.03, transformOrigin: '50% 100%', duration: 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut' }));
+      return () => {};
+    }
 
     // hero: phones arrive, float, then fan out as you leave
     const ph = gsap.utils.toArray('#phones .phone');
@@ -737,7 +782,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       .to(ph[0], { xPercent: -142, rotation: -22, y: -60, ease: 'none' }, 0)
       .to(ph[2], { xPercent: 42, rotation: 22, y: -60, ease: 'none' }, 0)
       .to(ph[1], { y: -120, scale: .92, ease: 'none' }, 0)
-      .to('.hero-copy', { y: -60, opacity: .3, ease: 'none' }, 0);
+      .to('.hero-copy', { y: -60, ease: 'none' }, 0);  // no fade: text stays at full contrast
     if (finePointer) {
       const box = document.getElementById('phones');
       box.addEventListener('pointermove', e => {
@@ -810,8 +855,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     loop(gsap.to('#llama', { scaleY: 1.03, transformOrigin: '50% 100%', duration: 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut' }));
 
     const story = tl.scrollTrigger, ridden = ride && ride.scrollTrigger;
-    // a section's top, kept clear of the fixed header
-    const topOf = sel => document.querySelector(sel).getBoundingClientRect().top + scrollY - document.querySelector('.top').offsetHeight;
+    const topOf = sel => document.querySelector(sel).getBoundingClientRect().top + scrollY;
     // one stop per beat of the story: the chat, its messages, the private ask, the app built, shared and voted
     const shelfStep = stepScroll(() => [
       { y: 0, fill: false },
