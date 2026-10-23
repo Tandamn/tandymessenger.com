@@ -29,7 +29,7 @@
 <meta name="apple-mobile-web-app-title" content="Tandy">
 <link rel="icon" type="image/png" href="assets/iconB.png">
 <link rel="apple-touch-icon" href="assets/iconB.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "MobileApplication", "@id": "https://tandymessenger.com/#app", "name": "Tandy Messenger", "alternateName": ["Tandy", "Tandy Messenger app"], "url": "https://tandymessenger.com/", "image": "https://tandymessenger.com/assets/og.jpg", "description": "Tandy Messenger is an AI group chat app. Tandy, the llama in your chat, makes checklists, plans, polls, quizzes and games for your friends. Coming soon to iPhone and Android.", "applicationCategory": "SocialNetworkingApplication", "operatingSystem": "iOS, Android", "publisher": {"@id": "https://www.tandamn.com/#org"}, "creator": {"@id": "https://www.tandamn.com/#org"}}, {"@type": "Organization", "@id": "https://www.tandamn.com/#org", "name": "Tandamn!", "url": "https://www.tandamn.com/", "logo": "https://www.tandamn.com/assets/icon.png"}, {"@type": "WebSite", "@id": "https://tandymessenger.com/#site", "url": "https://tandymessenger.com/", "name": "Tandy Messenger", "publisher": {"@id": "https://www.tandamn.com/#org"}, "inLanguage": "en"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Tandy Messenger?", "acceptedAnswer": {"@type": "Answer", "text": "Tandy Messenger is a group chat app with Tandy, an AI llama who makes checklists, plans, polls, quizzes, games and other little apps for your group, right inside the chat."}}, {"@type": "Question", "name": "When is Tandy Messenger coming out?", "acceptedAnswer": {"@type": "Answer", "text": "Soon. Tandy Messenger is on its way to the App Store and Google Play."}}, {"@type": "Question", "name": "Will Tandy Messenger be on iPhone and Android?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Tandy Messenger is coming to both iPhone and Android."}}, {"@type": "Question", "name": "Who sees what I ask Tandy?", "acceptedAnswer": {"@type": "Answer", "text": "Only you. What Tandy makes stays private until you choose to share it with the group."}}, {"@type": "Question", "name": "Who makes Tandy Messenger?", "acceptedAnswer": {"@type": "Answer", "text": "Tandy Messenger is made by Tandamn!, a small company that makes things worth a damn."}}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "MobileApplication", "@id": "https://tandymessenger.com/#app", "name": "Tandy Messenger", "alternateName": ["Tandy", "Tandy Messenger app"], "url": "https://tandymessenger.com/", "image": "https://tandymessenger.com/assets/og.jpg", "description": "Tandy Messenger is an AI group chat app. Tandy, the llama in your chat, makes checklists, plans, polls, quizzes and games for your friends. Coming soon to iPhone and Android.", "applicationCategory": "SocialNetworkingApplication", "operatingSystem": "iOS, Android", "publisher": {"@id": "https://www.tandamn.com/#org"}, "creator": {"@id": "https://www.tandamn.com/#org"}}, {"@type": "Organization", "@id": "https://www.tandamn.com/#org", "name": "Tandamn!", "url": "https://www.tandamn.com/", "logo": "https://www.tandamn.com/assets/icon.png"}, {"@type": "WebSite", "@id": "https://tandymessenger.com/#site", "url": "https://tandymessenger.com/", "name": "Tandy Messenger", "publisher": {"@id": "https://www.tandamn.com/#org"}, "inLanguage": "en"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Tandy Messenger?", "acceptedAnswer": {"@type": "Answer", "text": "Tandy Messenger is a group chat app with Tandy, an AI llama who makes checklists, plans, polls, quizzes, games and other little apps for your group, right inside the chat."}}, {"@type": "Question", "name": "When is Tandy Messenger coming out?", "acceptedAnswer": {"@type": "Answer", "text": "Soon. Tandy Messenger is on its way to the App Store and Google Play."}}, {"@type": "Question", "name": "Will Tandy Messenger be on iPhone and Android?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Tandy Messenger is coming to both iPhone and Android."}}, {"@type": "Question", "name": "Who sees what I ask Tandy?", "acceptedAnswer": {"@type": "Answer", "text": "Not your group. Your request and what Tandy makes appear in the group only when you choose to share them. Tandy answers using Claude, Anthropic's AI service, and only after you agree to it; the app's privacy notice at app.tandamn.com/privacy.html explains what is sent."}}, {"@type": "Question", "name": "Who makes Tandy Messenger?", "acceptedAnswer": {"@type": "Answer", "text": "Tandy Messenger is made by Tandamn!, a small company that makes things worth a damn."}}]}]}</script>
 <link rel="preload" href="fonts/rubik.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* fonts are served from this site (no requests to Google, so visitors' IPs go to no third party) */
@@ -42,7 +42,7 @@
   --bg-2: #e3effc;      /* Tandy blue, soft */
   --ink: #1c3055;       /* navy */
   --ink-2: #4a5f86;
-  --brand: #79b1fe;     /* wordmark blue */
+  --brand: #2f6fd0;     /* headline blue: 4.6:1 on the pale sky (the wordmark keeps its own art) */
   --action: #94bee8;
   --butter: #fdd66c;
   --pink: #fca2a5;
@@ -114,7 +114,7 @@ body {
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
-:focus-visible { outline: 3px dashed var(--lav); outline-offset: 4px; }
+:focus-visible { outline: 3px dashed var(--ink); outline-offset: 4px; }
 .wrap {
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
@@ -235,7 +235,7 @@ main { position: relative; z-index: 10; }
 /* 2 · the story (pinned) */
 .story { height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 48px; max-width: 1100px; margin-inline: auto; }
 .steps { position: relative; display: grid; gap: 28px; min-width: 0; }
-.steps .eyebrow { color: var(--ink-2); font-size: 13px; margin: 0; }
+.steps .eyebrow { color: var(--ink-2); font-size: 13px; font-weight: 400; margin: 0; }
 .step { opacity: .22; }
 .step h3 { margin: 0 0 4px; font-size: clamp(26px, 3.4vw, 42px); font-weight: 900; letter-spacing: -.025em; line-height: 1.05; }
 .step p { margin: 0; color: var(--ink-2); max-width: 30ch; }
@@ -329,7 +329,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   .track { cursor: auto; user-select: auto; }
   .story { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: start; gap: 12px; padding-block: calc(env(safe-area-inset-top, 0px) + 72px) 16px; }
   .steps { min-height: 118px; gap: 0; }
-  .steps .eyebrow { display: none; }
+  .steps .eyebrow { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }  /* kept for screen readers */
   .step { position: absolute; inset: 0 0 auto 0; opacity: 0; }
   .step:first-of-type { opacity: 1; }
   .step h3 { font-size: 28px; }
@@ -419,9 +419,9 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   <!-- 2 · how it works (pinned) -->
   <section class="story wrap" id="story">
     <div class="steps">
-      <p class="eyebrow pixel">How it works</p>
+      <h2 class="eyebrow pixel">How it works</h2>
       <div class="step"><span class="n">1 of 3</span><h3>Chat like always.</h3><p>Your friends, your plans, your inside jokes.</p></div>
-      <div class="step"><span class="n">2 of 3</span><h3>Ask Tandy. Just you two.</h3><p>Only you see what he makes until you share it.</p></div>
+      <div class="step"><span class="n">2 of 3</span><h3>Ask Tandy. Just you two.</h3><p>Your group sees it only when you share it.</p></div>
       <div class="step"><span class="n">3 of 3</span><h3>Share it. Play together.</h3><p>Everyone taps, votes and plays right in the chat.</p></div>
     </div>
 
@@ -443,7 +443,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       <div class="composer"><div class="field">Message</div><div class="dock" id="dock"><img class="for-light" src="assets/llamaHeadB.png" alt=""><img class="for-dark" src="assets/llamaHead.png" alt=""></div></div>
 
       <div class="private" id="private">
-        <span class="banner">JUST YOU AND TANDY</span>
+        <span class="banner">NOT SHARED YET</span>
         <div class="msg out p1">Tandy, make us a vote for Friday</div>
         <div class="tandy p2"><img class="for-light" src="assets/llamaHeadB.png" alt=""><img class="for-dark" src="assets/llamaHead.png" alt="">
           <div class="msg typing" id="typing"><i></i><i></i><i></i></div>
@@ -509,12 +509,12 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       <details class="qa"><summary>What is Tandy Messenger?</summary><p>Tandy Messenger is a group chat app with Tandy, an AI llama who makes checklists, plans, polls, quizzes, games and other little apps for your group, right inside the chat.</p></details>
       <details class="qa"><summary>When is Tandy Messenger coming out?</summary><p>Soon. Tandy Messenger is on its way to the App Store and Google Play.</p></details>
       <details class="qa"><summary>Will Tandy Messenger be on iPhone and Android?</summary><p>Yes. Tandy Messenger is coming to both iPhone and Android.</p></details>
-      <details class="qa"><summary>Who sees what I ask Tandy?</summary><p>Only you. What Tandy makes stays private until you choose to share it with the group.</p></details>
+      <details class="qa"><summary>Who sees what I ask Tandy?</summary><p>Not your group. Your request and what Tandy makes appear in the group only when you choose to share them. Tandy answers using Claude, Anthropic's AI service, and only after you agree to it; the <a href="https://app.tandamn.com/privacy.html">app's privacy notice</a> explains what is sent.</p></details>
       <details class="qa"><summary>Who makes Tandy Messenger?</summary><p>Tandy Messenger is made by Tandamn!, a small company that makes things worth a damn.</p></details>
     </div>
   </section>
 </main>
-<footer class="wrap">MADE WITH ❤️ BY <a href="https://www.tandamn.com/">TANDAMN!</a> · © 2026 · TANDY MESSENGER, THE AI GROUP CHAT APP · <a href="accessibility.html">ACCESSIBILITY</a> · <a href="privacy.html">PRIVACY</a></footer>
+<footer class="wrap">MADE WITH ❤️ BY <a href="https://www.tandamn.com/">TANDAMN!</a> · © 2026 · TANDY MESSENGER, THE AI GROUP CHAT APP · IN DEVELOPMENT: THE EXAMPLES SHOW INTENDED FEATURES · <a href="accessibility.html">ACCESSIBILITY</a> · <a href="privacy.html">SITE PRIVACY</a> · <a href="https://app.tandamn.com/privacy.html">APP PRIVACY</a> · <a href="https://app.tandamn.com/delete-account.html">DELETE ACCOUNT</a></footer>
 
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
