@@ -13,20 +13,55 @@
 :root { --bg: #f5f9fc; --ink: #1c3055; --ink-2: #4a5f86; --line: rgba(28, 48, 85, .16); --accent: #5a3cb8; color-scheme: light; }
 @media (prefers-color-scheme: dark) { :root { --bg: #23203d; --ink: #f7eed8; --ink-2: #c9b3f0; --line: rgba(247, 238, 216, .16); --accent: #bfe5d4; color-scheme: dark; } }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 18px/1.6 "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-size: 1.125rem; font-family: "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
 main { max-width: 72ch; margin-inline: auto; padding-block: 48px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 a { color: var(--accent); }
 :focus-visible { outline: 3px dashed var(--accent); outline-offset: 3px; }
-h1 { font-size: clamp(30px, 5vw, 44px); line-height: 1.1; margin: 0 0 8px; letter-spacing: -.02em; }
-h2 { font-size: 22px; margin: 32px 0 8px; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.75rem); line-height: 1.1; margin: 0 0 8px; letter-spacing: -.02em; }
+main h2 { font-size: 1.375rem; margin: 2rem 0 .5rem; }
 .meta { color: var(--ink-2); margin: 0 0 24px; }
 section + section { border-top: 2px solid var(--line); margin-top: 48px; padding-top: 32px; }
 .back { display: inline-block; margin-bottom: 24px; }
 .skip { position: absolute; left: -9999px; } .skip:focus { left: 16px; top: 8px; background: #fdd66c; color: #1c3055; padding: 8px 12px; }
+
+:root { --scale: 1; --leading: 1.6; }
+html { font-size: calc(100% * var(--scale)); }
+body { line-height: var(--leading); }
+:root.contrast { --bg: #000000; --ink: #ffffff; --ink-2: #ffffff; --link: #ffff00; --accent: #ffff00; --line: #ffffff; --panel: #000000; --focus: #ffff00; color-scheme: dark; }
+:root.readable body { font-family: Verdana, Tahoma, Arial, sans-serif; letter-spacing: .02em; word-spacing: .08em; }
+:root.spacing { --leading: 2; }
+:root.spacing p, :root.spacing li { margin-bottom: 1.2em; }
+:root.links a { background: var(--link, var(--accent)); color: var(--bg); padding: 0 .2em; text-decoration: underline; text-decoration-thickness: 2px; }
+.tools { position: sticky; top: 0; z-index: 5; background: var(--panel, var(--bg)); border-bottom: 2px solid var(--line);
+  padding: .6rem max(1rem, env(safe-area-inset-right, 0px)) .6rem max(1rem, env(safe-area-inset-left, 0px)); }
+.tools-in { max-width: 72ch; margin-inline: auto; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: flex-end; }
+.tools .tools-toggle { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: 0 1rem 0 .75rem; border: 0; border-radius: 999px;
+  background: var(--ink); color: var(--bg); font: inherit; font-size: .95rem; font-weight: 600; cursor: pointer; }
+.tools .tools-toggle svg { fill: currentColor; flex: none; }
+.tools .tools-toggle[aria-expanded="true"] { outline: 2px solid var(--ink); outline-offset: 2px; }
+.tools-panel { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.tools-panel[hidden] { display: none; }
+.tools button { font: inherit; font-size: .95rem; min-height: 44px; padding: .3rem .8rem; color: var(--ink); background: var(--bg); border: 2px solid var(--ink); border-radius: .4rem; cursor: pointer; }
+.tools button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<section class="tools" aria-label="Display tools">
+  <div class="tools-in">
+    <button type="button" class="tools-toggle" id="t-toggle" aria-expanded="false" aria-controls="tools-panel"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="4.2" r="2.2"/><path d="M4 7.6l8 1.2 8-1.2.4 2-5.6 1.2v3.4l2.4 7.6-2 .6-3.2-6.8-3.2 6.8-2-.6 2.4-7.6v-3.4L3.6 9.6z"/></svg><span>Display tools</span></button>
+    <div class="tools-panel" id="tools-panel" hidden>
+    <button type="button" id="t-smaller">A− Smaller text</button>
+    <button type="button" id="t-bigger">A+ Larger text</button>
+    <button type="button" data-toggle="contrast" aria-pressed="false">High contrast</button>
+    <button type="button" data-toggle="readable" aria-pressed="false">Readable font</button>
+    <button type="button" data-toggle="links" aria-pressed="false">Highlight links</button>
+    <button type="button" data-toggle="spacing" aria-pressed="false">Line spacing</button>
+    <button type="button" id="t-reset">Reset</button>
+    <p id="tools-status" role="status" aria-live="polite" style="margin:0;flex-basis:100%;min-height:0"></p>
+    </div>
+  </div>
+</section>
 <main id="main">
 <a class="back" href="/">← Back to the site</a>
 
@@ -67,5 +102,30 @@ section + section { border-top: 2px solid var(--line); margin-top: 48px; padding
 </section>
 
 </main>
+<script>
+(() => {
+  // display tools: classes on <html>, nothing stored, no outside code
+  const root = document.documentElement, status = document.getElementById('tools-status');
+  const toggle = document.getElementById('t-toggle'), panel = document.getElementById('tools-panel');
+  const open = on => { panel.hidden = !on; toggle.setAttribute('aria-expanded', String(on)); };
+  toggle.onclick = () => open(panel.hidden);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) { open(false); toggle.focus(); } });
+  const say = t => { status.textContent = t; };
+  let scale = 1;
+  const setScale = v => { scale = Math.min(2, Math.max(.9, Math.round(v * 100) / 100)); root.style.setProperty('--scale', scale); say('Text size ' + Math.round(scale * 100) + '%'); };
+  document.getElementById('t-bigger').onclick = () => setScale(scale + .15);
+  document.getElementById('t-smaller').onclick = () => setScale(scale - .15);
+  document.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
+    const on = root.classList.toggle(b.dataset.toggle);
+    b.setAttribute('aria-pressed', String(on));
+    say(b.textContent + (on ? ' on' : ' off'));
+  }));
+  document.getElementById('t-reset').onclick = () => {
+    root.className = ''; setScale(1);
+    document.querySelectorAll('[data-toggle]').forEach(b => b.setAttribute('aria-pressed', 'false'));
+    say('Display reset');
+  };
+})();
+</script>
 </body>
 </html>

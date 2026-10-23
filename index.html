@@ -31,6 +31,8 @@
 <link rel="apple-touch-icon" href="assets/iconB.png">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "MobileApplication", "@id": "https://tandymessenger.com/#app", "name": "Tandy Messenger", "alternateName": ["Tandy", "Tandy Messenger app"], "url": "https://tandymessenger.com/", "image": "https://tandymessenger.com/assets/og.jpg", "description": "Tandy Messenger is an AI group chat app. Tandy, the llama in your chat, makes checklists, plans, polls, quizzes and games for your friends. Coming soon to iPhone and Android.", "applicationCategory": "SocialNetworkingApplication", "operatingSystem": "iOS, Android", "publisher": {"@id": "https://www.tandamn.com/#org"}, "creator": {"@id": "https://www.tandamn.com/#org"}}, {"@type": "Organization", "@id": "https://www.tandamn.com/#org", "name": "Tandamn!", "url": "https://www.tandamn.com/", "logo": "https://www.tandamn.com/assets/icon.png"}, {"@type": "WebSite", "@id": "https://tandymessenger.com/#site", "url": "https://tandymessenger.com/", "name": "Tandy Messenger", "publisher": {"@id": "https://www.tandamn.com/#org"}, "inLanguage": "en"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Tandy Messenger?", "acceptedAnswer": {"@type": "Answer", "text": "Tandy Messenger is a group chat app with Tandy, an AI llama who makes checklists, plans, polls, quizzes, games and other little apps for your group, right inside the chat."}}, {"@type": "Question", "name": "When is Tandy Messenger coming out?", "acceptedAnswer": {"@type": "Answer", "text": "Soon. Tandy Messenger is on its way to the App Store and Google Play."}}, {"@type": "Question", "name": "Will Tandy Messenger be on iPhone and Android?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Tandy Messenger is coming to both iPhone and Android."}}, {"@type": "Question", "name": "Who sees what I ask Tandy?", "acceptedAnswer": {"@type": "Answer", "text": "Not your group. Your request and what Tandy makes appear in the group only when you choose to share them. Tandy answers using Claude, Anthropic's AI service, and only after you agree to it; the app's privacy notice at app.tandamn.com/privacy.html explains what is sent."}}, {"@type": "Question", "name": "Who makes Tandy Messenger?", "acceptedAnswer": {"@type": "Answer", "text": "Tandy Messenger is made by Tandamn!, a small company that makes things worth a damn."}}]}]}</script>
 <link rel="preload" href="fonts/rubik.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/tandy-wordmark-light.webp" media="(prefers-color-scheme: light)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/tandy-wordmark-dark.webp" media="(prefers-color-scheme: dark)" fetchpriority="high">
 <style>
 /* fonts are served from this site (no requests to Google, so visitors' IPs go to no third party) */
 @font-face { font-family: "Rubik"; font-style: normal; font-weight: 300 900; font-display: swap; src: url(fonts/rubik.woff2) format("woff2"); }
@@ -201,7 +203,8 @@ main { position: relative; z-index: 10; }
 .chat-head .av b:first-child { margin-left: 0; }
 .chat-head strong { font-size: 1.05em; }
 .chat-head span { display: block; font-size: .78em; color: var(--ink-2); }
-.msgs { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: .45em; padding: .8em .8em .4em; min-height: 0; }
+.msgs { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: .45em; padding: .8em .8em .4em; min-height: 0; overflow: hidden; }  /* older messages slide up out of view, like a real chat */
+.day { align-self: center; font-size: .7em; color: var(--ink-2); background: var(--bubble-in); border-radius: 99px; padding: .2em .8em; }
 .msg { max-width: 80%; padding: .45em .75em; border-radius: 1.1em; background: var(--bubble-in); align-self: flex-start; }
 .msg .who { display: block; font-size: .72em; font-weight: 700; }
 .msg.out { align-self: flex-end; background: var(--bubble-out); }
@@ -237,14 +240,16 @@ main { position: relative; z-index: 10; }
 .quiz-grid span { border-radius: .7em; padding: 1.1em .4em; text-align: center; font-weight: 700; color: #1c3055; }
 
 /* 2 · the story (pinned) */
-.story { height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 48px; max-width: 1100px; margin-inline: auto; }
+.story { height: 100svh; display: grid; grid-template-columns: minmax(0, 440px) auto; justify-content: center; align-items: center; column-gap: clamp(48px, 8vw, 120px); max-width: 1100px; margin-inline: auto; }  /* caption and phone side by side in the middle */
 .steps { position: relative; display: grid; gap: 28px; min-width: 0; }
 .steps .eyebrow { color: var(--ink-2); font-size: 13px; font-weight: 400; margin: 0; }
-.step { opacity: .22; }
+.steps .eyebrow { grid-area: 1 / 1; }
+.steps .step { grid-area: 2 / 1; opacity: 0; }
+.steps .step:first-of-type { opacity: 1; }
 .step h3 { margin: 0 0 4px; font-size: clamp(26px, 3.4vw, 42px); font-weight: 900; letter-spacing: -.025em; line-height: 1.05; }
 .step p { margin: 0; color: var(--ink-2); max-width: 30ch; }
-.step .n { font-family: var(--font-pixel); font-size: 13px; color: var(--lav); }
-.story .phone { --w: min(320px, calc(68svh / 2.13)); }
+.step .n { font-family: var(--font-pixel); font-size: 13px; color: var(--private-ink); }  /* dark purple: 7:1 */
+.story .phone { --w: min(340px, calc(78svh / 2.13)); }
 .private {
   position: absolute; inset: 0; z-index: 4; background: var(--private); color: var(--private-ink);
   display: flex; flex-direction: column; padding: 3.6em .8em 1.4em; gap: .6em;
@@ -312,7 +317,10 @@ main { position: relative; z-index: 10; }
 .qa summary::after { content: "+"; font-family: var(--font-pixel); color: var(--lav); }
 .qa[open] summary::after { content: "–"; }
 .qa p { margin: 0; padding: 0 18px 18px; color: var(--ink-2); }
-footer { position: relative; z-index: 10; text-align: center; padding-block: 0 calc(28px + env(safe-area-inset-bottom, 0px)); font-family: var(--font-pixel); font-size: 12px; color: var(--ink-2); }
+footer { position: relative; z-index: 10; text-align: center; padding-block: 8px calc(32px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 12px; justify-items: center; }
+.dev-note { margin: 0; font-size: 14px; color: var(--ink-2); max-width: 60ch; }
+.foot-links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 20px; font-size: 15px; font-weight: 500; }
+.foot-links a { color: var(--ink); font-weight: 700; text-underline-offset: 3px; padding-block: 6px; }
 
 @media (max-width: 860px) {
   body { font-size: 16px; }
@@ -357,6 +365,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
 }
 @media (prefers-reduced-motion: reduce) {
   .step { opacity: 1; position: static; }
+  .steps .step { grid-area: auto; }
   .shelf { height: auto; padding-block: 80px; }
   .track { flex-wrap: wrap; width: auto; max-width: 1240px; margin-inline: auto; }
   .shelf-nav { display: none; }
@@ -371,8 +380,8 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
 <a class="skip" href="#top">Skip to content</a>
 <header class="top wrap">
   <a class="brandmark pixel" href="#top">
-    <img class="for-light" src="assets/llamaHeadB.png" alt="">
-    <img class="for-dark" src="assets/llamaHead.png" alt="">
+    <img class="for-light" src="assets/llamaHeadB.webp" alt="">
+    <img class="for-dark" src="assets/llamaHead.webp" alt="">
     <span class="brand-name">Tandy Messenger</span>
   </a>
   <div class="top-actions">
@@ -385,8 +394,8 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   <!-- 1 · hero -->
   <section class="hero wrap">
     <div class="hero-copy">
-      <img class="wordmark for-light" src="assets/tandy-wordmark-light.webp" alt="Tandy Messenger logo" width="1752" height="602">
-      <img class="wordmark for-dark" src="assets/tandy-wordmark-dark.webp" alt="Tandy Messenger logo" width="1706" height="580">
+      <img class="wordmark for-light" src="assets/tandy-wordmark-light.webp" alt="Tandy Messenger logo" width="900" height="309" fetchpriority="high">
+      <img class="wordmark for-dark" src="assets/tandy-wordmark-dark.webp" alt="Tandy Messenger logo" width="900" height="306">
       <p class="kicker pixel">The AI group chat app</p>
       <h1><span class="sr">Tandy Messenger: </span>Group chats that <em>build things.</em></h1>
       <p class="lede">Tandy is the AI llama in your group chat. Ask him for a checklist, a plan, a vote or a game, and it pops up for everyone, ready to use.</p>
@@ -414,6 +423,9 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
         <div class="island"></div>
         <div class="chat-head"><div class="av"><b class="b-maya"></b><b class="b-ben"></b><b class="b-noa"></b></div><div><strong>Friday crew</strong><span>4 friends and Tandy</span></div></div>
         <div class="msgs">
+          <div class="day">Today</div>
+          <div class="msg early"><span class="who c-noa">Noa</span>that hike was SO worth it ⛰️</div>
+          <div class="msg out early">next weekend, round two?</div>
           <div class="msg"><span class="who c-maya">Maya</span>Friday. Who's in? 🍕</div>
           <div class="msg out">me!! but what are we doing</div>
           <div class="card"><h4>Friday plan <small>VOTE</small></h4>
@@ -421,7 +433,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
             <div class="opt" style="--v:24%"><i></i><span>Bowling</span><b>1</b></div>
           </div>
         </div>
-        <div class="composer"><div class="field">Message</div><div class="dock"><img class="for-light" src="assets/llamaHeadB.png" alt=""><img class="for-dark" src="assets/llamaHead.png" alt=""></div></div>
+        <div class="composer"><div class="field">Message</div><div class="dock"><img class="for-light" src="assets/llamaHeadB.webp" alt=""><img class="for-dark" src="assets/llamaHead.webp" alt=""></div></div>
       </div></div>
 
       <div class="phone p3"><div class="screen">
@@ -448,6 +460,9 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       <div class="island"></div>
       <div class="chat-head"><div class="av"><b class="b-maya"></b><b class="b-ben"></b><b class="b-noa"></b></div><div><strong>Friday crew</strong><span>4 friends and Tandy</span></div></div>
       <div class="msgs">
+        <div class="day">Today</div>
+        <div class="msg early"><span class="who c-noa">Noa</span>that hike was SO worth it ⛰️</div>
+        <div class="msg out early">ok but something chill this time</div>
         <div class="msg s1"><span class="who c-maya">Maya</span>Friday night. Who's in? 🍕</div>
         <div class="msg s1"><span class="who c-ben">Ben</span>me!!</div>
         <div class="msg s1"><span class="who c-noa">Noa</span>in, but what are we doing</div>
@@ -459,12 +474,12 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
         <div class="reacts s3"><span>🎉 3</span><span>🔥 2</span></div>
         <div class="msg s3"><span class="who c-ben">Ben</span>pizza wins. obviously.</div>
       </div>
-      <div class="composer"><div class="field">Message</div><div class="dock" id="dock"><img class="for-light" src="assets/llamaHeadB.png" alt=""><img class="for-dark" src="assets/llamaHead.png" alt=""></div></div>
+      <div class="composer"><div class="field">Message</div><div class="dock" id="dock"><img class="for-light" src="assets/llamaHeadB.webp" alt=""><img class="for-dark" src="assets/llamaHead.webp" alt=""></div></div>
 
       <div class="private" id="private">
         <span class="banner">NOT SHARED YET</span>
         <div class="msg out p1">Tandy, make us a vote for Friday</div>
-        <div class="tandy p2"><img class="for-light" src="assets/llamaHeadB.png" alt=""><img class="for-dark" src="assets/llamaHead.png" alt="">
+        <div class="tandy p2"><img class="for-light" src="assets/llamaHeadB.webp" alt=""><img class="for-dark" src="assets/llamaHead.webp" alt="">
           <div class="msg typing" id="typing"><i></i><i></i><i></i></div>
           <div class="msg" id="tandyReply" hidden>Here's one. Want to share it?</div>
         </div>
@@ -511,8 +526,8 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   <section class="soon wrap" id="soon">
     <span class="say" id="say">SEE YOU IN THE APP STORES!</span>
     <button class="llama" id="llama" type="button" aria-label="Tandy the llama. Tap to make him hop.">
-      <img class="for-light" src="assets/llamaB.png" alt="Tandy the llama" width="175" height="262">
-      <img class="for-dark" src="assets/llama.png" alt="Tandy the llama" width="222" height="358">
+      <img class="for-light" src="assets/llamaB.webp" alt="Tandy the llama" width="175" height="262" loading="lazy" decoding="async">
+      <img class="for-dark" src="assets/llama.webp" alt="Tandy the llama" width="222" height="358" loading="lazy" decoding="async">
     </button>
     <h2>Coming <span>Soon.</span></h2>
     <p>Tandy Messenger lands on iPhone and Android soon. Bring your group.</p>
@@ -533,7 +548,16 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     </div>
   </section>
 </main>
-<footer class="wrap">MADE WITH ❤️ BY <a href="https://www.tandamn.com/">TANDAMN!</a> · © 2026 · TANDY MESSENGER, THE AI GROUP CHAT APP · IN DEVELOPMENT: THE EXAMPLES SHOW INTENDED FEATURES · <a href="accessibility.html">ACCESSIBILITY</a> · <a href="privacy.html">SITE PRIVACY</a> · <a href="https://app.tandamn.com/privacy.html">APP PRIVACY</a> · <a href="https://app.tandamn.com/delete-account.html">DELETE ACCOUNT</a></footer>
+<footer class="wrap">
+  <p class="dev-note">Tandy Messenger is in development: the examples show intended features.</p>
+  <nav class="foot-links" aria-label="Site">
+    <span>Made with ❤️ by <a href="https://www.tandamn.com/">Tandamn!</a> · © 2026</span>
+    <a href="accessibility.html">Accessibility</a>
+    <a href="privacy.html">Site privacy</a>
+    <a href="https://app.tandamn.com/privacy.html">App privacy</a>
+    <a href="https://app.tandamn.com/delete-account.html">Delete account</a>
+  </nav>
+</footer>
 
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
@@ -659,87 +683,26 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   }
 
 
-  // ---------- one gesture = one stop (a fast flick can't fly past the scenes) ----------
-  // stops: [{ y, fill, t }]; gaps longer than a screen get extra stops unless fill is false (inside a pinned scene).
-  // t is the animation's own time at that stop: a move between two such stops takes that long, so the story plays at its natural pace
-  // sideways(): [min, max] scroll range where left/right also steps (the shelf), or null outside it
-  function stepScroll(baseStops, sideways = () => null) {
+  // ---------- the shelf also moves sideways (wider screens) ----------
+  // The page scrolls natively everywhere. On the pinned shelf, a sideways swipe, a mouse drag, the arrows
+  // and the left/right keys become the vertical scroll that drives it.
+  function shelfSideways(ride) {
     gsap.registerPlugin(Observer, ScrollToPlugin);
-    let busy = false, fresh = true, lastT = 0, lastD = 0, movedAt = -1e9, moving = null;
-    // the phone's own swipe scrolling would fly on alongside the steps; keep pinch zoom, let only the steps move the page
-    document.documentElement.style.touchAction = 'pinch-zoom';
-    document.documentElement.style.overscrollBehavior = 'none';
-    const stops = () => {
-      const max = ScrollTrigger.maxScroll(window);
-      const raw = [...baseStops(), { y: max }].map(s => ({ y: Math.round(gsap.utils.clamp(0, max, s.y)), fill: s.fill !== false, t: s.t }))
-        .sort((a, b) => a.y - b.y);
-      const step = innerHeight * .85, out = [raw[0]];
-      for (const s of raw.slice(1)) {
-        const prev = out[out.length - 1];
-        if (s.y - prev.y < 4) continue;
-        const n = prev.fill && s.y - prev.y > innerHeight * 1.25 ? Math.ceil((s.y - prev.y) / step) : 1;
-        for (let i = 1; i < n; i++) out.push({ y: Math.round(prev.y + (s.y - prev.y) * i / n), fill: true });
-        out.push(s);
-      }
-      return out;
-    };
-    // trackpad momentum fades smoothly; a new push comes after a pause or speeds up again (the Lethargy idea),
-    // so a small new push always counts and the momentum tail never chains extra steps
-    const onWheel = e => {
-      const d = Math.abs(e.deltaY);
-      // (a speed-up right after a move starts is the same swipe still ramping up)
-      if (e.timeStamp - lastT > 120 || (d > lastD * 1.3 + 2 && e.timeStamp - movedAt > 300)) fresh = true;
-      lastT = e.timeStamp; lastD = d;
-    };
-    addEventListener('wheel', onWheel, { passive: true, capture: true });
-    // A new push while a step is still playing doesn't wait: it carries on to the next stop
-    // (or, the other way, back to the stop it came from). Without one, each step plays at its own pace.
-    const go = (dir, within) => {
-      if (!fresh) return;
-      const list = stops();
-      const from = busy && moving ? moving.target : null;
-      const y = from ? from.y : scrollY;
-      const here = from || list.find(s => Math.abs(s.y - y) <= 4);
-      const target = dir > 0 ? list.find(s => s.y > y + 4) : [...list].reverse().find(s => s.y < y - 4);
-      if (!target || (within && (target.y < within[0] - 4 || target.y > within[1] + 4))) return;
-      if (moving) moving.tween.kill();
-      busy = true; fresh = false; movedAt = performance.now();
-      const paced = here && here.t !== undefined && target.t !== undefined;
-      // the part of this step's length still to travel (a turn-around mid-move is short)
-      const left = Math.abs(target.y - scrollY) / Math.max(1, Math.abs(target.y - here.y));
-      const tween = gsap.to(window, { scrollTo: { y: target.y, autoKill: false },
-        duration: paced ? gsap.utils.clamp(.6, 3.5, Math.abs(target.t - here.t) * Math.min(left, 1.6)) : gsap.utils.clamp(.6, 1.8, .7 + Math.abs(target.y - scrollY) / innerHeight * .5),
-        // picking up mid-move starts at speed instead of from a standstill
-        ease: from ? 'sine.out' : paced ? 'sine.inOut' : 'power2.inOut',
-        onComplete: () => { busy = false; moving = null; } });
-      moving = { tween, target };
-    };
-    // a sideways swipe moves the shelf (and nothing outside it)
-    const side = dir => { const r = sideways(); if (r) go(dir, r); };
-    const obs = Observer.create({ target: window, type: 'wheel,touch', wheelSpeed: -1, tolerance: 6, preventDefault: true,
-      onPress: () => { fresh = true; }, onUp: () => go(1), onDown: () => go(-1), onLeft: () => side(1), onRight: () => side(-1) });
+    const on = () => scrollY >= ride.start - 2 && scrollY <= ride.end + 2;
+    const step = () => Math.min(400, innerWidth * .3);
+    const move = px => gsap.to(window, { scrollTo: { y: gsap.utils.clamp(ride.start, ride.end, scrollY + px), autoKill: true },
+      duration: .6, ease: 'power2.out', overwrite: true });
+    const onWheel = e => { if (on() && Math.abs(e.deltaX) > Math.abs(e.deltaY)) { e.preventDefault(); scrollBy(0, e.deltaX); } };
     const onKey = e => {
-      if (e.target.closest('input, textarea, select, [contenteditable]')) return;
-      const space = e.key === ' ' && !e.target.closest('button, a, summary');
-      if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && sideways()) { e.preventDefault(); fresh = true; side(e.key === 'ArrowRight' ? 1 : -1); return; }
-      const dir = e.key === 'ArrowDown' || e.key === 'PageDown' || (space && !e.shiftKey) ? 1
-        : e.key === 'ArrowUp' || e.key === 'PageUp' || (space && e.shiftKey) ? -1 : 0;
-      if (!dir) return;
-      e.preventDefault(); fresh = true; go(dir);
+      if (!on() || e.target.closest('input, textarea, select, [contenteditable]')) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); move((e.key === 'ArrowRight' ? 1 : -1) * step()); }
     };
+    addEventListener('wheel', onWheel, { passive: false });
     addEventListener('keydown', onKey);
+    const drag = Observer.create({ target: '#track', type: 'pointer', dragMinimum: 6, onDrag: self => scrollBy(0, -self.deltaX) });
     return {
-      // for buttons and drags: one step sideways, kept inside the shelf
-      side: dir => { fresh = true; side(dir); },
-      // back to plain scrolling (the window became phone-sized)
-      kill: () => {
-        if (moving) moving.tween.kill();
-        obs.kill();
-        removeEventListener('wheel', onWheel, { capture: true });
-        removeEventListener('keydown', onKey);
-        document.documentElement.style.touchAction = '';
-        document.documentElement.style.overscrollBehavior = '';
-      },
+      move: dir => move(dir * step()),
+      kill: () => { removeEventListener('wheel', onWheel); removeEventListener('keydown', onKey); drag.kill(); },
     };
   }
 
@@ -770,9 +733,9 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   const fillVotes = () => document.querySelectorAll('#sharedCard .opt').forEach(o => o.style.setProperty('--v', o.dataset.v + '%'));
 
   // the shelf arrows talk to whichever desktop setup is current
-  let shelfStep = null;
-  document.getElementById('shelfNext').addEventListener('click', () => shelfStep && shelfStep.side(1));
-  document.getElementById('shelfPrev').addEventListener('click', () => shelfStep && shelfStep.side(-1));
+  let shelfNav = null;
+  document.getElementById('shelfNext').addEventListener('click', () => shelfNav && shelfNav.move(1));
+  document.getElementById('shelfPrev').addEventListener('click', () => shelfNav && shelfNav.move(-1));
 
   // One setup per screen size and motion preference. Crossing 860 px (resizing the window, turning a tablet)
   // reverts everything the old setup made, pins and scroll stepping included, and runs the right one.
@@ -829,7 +792,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     gsap.set('#bits b', { x: () => rand(-160, 160), y: () => rand(-260, 120), rotation: () => rand(-180, 180), scale: 0 });
     gsap.set(typing.children, { y: 0 });
     loop(gsap.to(typing.children, { y: -4, duration: .3, ease: 'steps(2)', yoyo: true, repeat: -1, stagger: .1 }));
-    const showStep = (n) => (tl, at) => steps.forEach((s, i) => tl.to(s, { opacity: i === n ? 1 : (narrow ? 0 : .22), duration: narrow ? .02 : .3 }, at));
+    const showStep = (n) => (tl, at) => steps.forEach((s, i) => tl.to(s, { opacity: i === n ? 1 : 0, duration: .3 }, at));
 
     const tl = gsap.timeline({ scrollTrigger: { trigger: '#story', start: 'top top', end: '+=320%', pin: true, scrub: .8 } });
     tl.from('#storyPhone .s1', { y: 30, opacity: 0, stagger: .4, duration: .5 })
@@ -882,26 +845,9 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       .from('.soon h2, .soon p, .soon .stores, .maker', { y: 30, opacity: 0, stagger: .08, duration: .5, ease: 'power3.out' }, '-=.3');
     loop(gsap.to('#llama', { scaleY: 1.03, transformOrigin: '50% 100%', duration: 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut' }));
 
-    const story = tl.scrollTrigger, ridden = ride && ride.scrollTrigger;
-    const topOf = sel => document.querySelector(sel).getBoundingClientRect().top + scrollY;
-    // one stop per beat of the story: the chat, its messages, the private ask, the app built, shared and voted
-    const stepper = stepScroll(() => [
-      { y: 0, fill: false },
-      { y: story.start, fill: false, t: 0 },
-      { y: story.labelToScroll('ask'), fill: false, t: tl.labels.ask },
-      { y: story.labelToScroll('asked'), fill: false, t: tl.labels.asked },
-      { y: story.labelToScroll('share'), fill: false, t: tl.labels.share },
-      { y: story.end, t: tl.duration() },
-      ...(ridden ? [{ y: ridden.start }, { y: ridden.end }] : [{ y: topOf('#shelf') }]),
-      { y: topOf('#soon') },
-      { y: topOf('#faq') },
-    ], () => ridden && scrollY >= ridden.start - 4 && scrollY <= ridden.end + 4 ? [ridden.start, ridden.end] : null);
-    shelfStep = stepper;
-    // drag the cards with the mouse
-    const drag = Observer.create({ target: '#track', type: 'pointer', dragMinimum: 8, tolerance: 30,
-      onLeft: () => stepper.side(1), onRight: () => stepper.side(-1) });
+    shelfNav = ride ? shelfSideways(ride.scrollTrigger) : null;
 
-    return () => { stepper.kill(); drag.kill(); shelfStep = null; };
+    return () => { if (shelfNav) shelfNav.kill(); shelfNav = null; };
   });
 })();
 </script>

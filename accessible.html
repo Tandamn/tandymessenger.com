@@ -39,9 +39,10 @@ footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<section class="tools" aria-labelledby="tools-title">
+<section class="tools" aria-label="Display tools">
   <div class="tools-in">
-    <h2 id="tools-title">Display</h2>
+    <button type="button" class="tools-toggle" id="t-toggle" aria-expanded="false" aria-controls="tools-panel"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="4.2" r="2.2"/><path d="M4 7.6l8 1.2 8-1.2.4 2-5.6 1.2v3.4l2.4 7.6-2 .6-3.2-6.8-3.2 6.8-2-.6 2.4-7.6v-3.4L3.6 9.6z"/></svg><span>Display tools</span></button>
+    <div class="tools-panel" id="tools-panel" hidden>
     <button type="button" id="t-smaller">A− Smaller text</button>
     <button type="button" id="t-bigger">A+ Larger text</button>
     <button type="button" data-toggle="contrast" aria-pressed="false">High contrast</button>
@@ -50,6 +51,7 @@ footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .
     <button type="button" data-toggle="spacing" aria-pressed="false">Line spacing</button>
     <button type="button" id="t-reset">Reset</button>
     <p id="tools-status" role="status" aria-live="polite" style="margin:0;flex-basis:100%;min-height:0"></p>
+    </div>
   </div>
 </section>
 <main id="main">
@@ -114,6 +116,10 @@ footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .
 (() => {
   // display tools: classes on <html>, nothing stored, no outside code
   const root = document.documentElement, status = document.getElementById('tools-status');
+  const toggle = document.getElementById('t-toggle'), panel = document.getElementById('tools-panel');
+  const open = on => { panel.hidden = !on; toggle.setAttribute('aria-expanded', String(on)); };
+  toggle.onclick = () => open(panel.hidden);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) { open(false); toggle.focus(); } });
   const say = t => { status.textContent = t; };
   let scale = 1;
   const setScale = v => { scale = Math.min(2, Math.max(.9, Math.round(v * 100) / 100)); root.style.setProperty('--scale', scale); say('Text size ' + Math.round(scale * 100) + '%'); };
