@@ -58,22 +58,23 @@
   --shadow: rgba(28, 48, 85, .28);
   --font-display: "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --font-pixel: "Silkscreen", ui-monospace, "Courier New", monospace;
-  --motion-bg: var(--bg); --motion-ink: var(--ink);
+  --a11y-bg: var(--ink); --a11y-ink: var(--bg);
   --c-maya: #a8394a; --c-ben: #2558a8; --c-noa: #5f3fb8;   /* friends' names, AA on the bubbles */
 }
-/* accessibility: skip link, pause motion */
+/* accessibility: skip link, the link to the accessible version; ambient motion rests after 5 s */
+.a11y-link {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 12px; border-radius: 999px;
+  background: var(--a11y-bg); color: var(--a11y-ink); text-decoration: none;
+  font: 600 15px/1 var(--font-display); box-shadow: 0 4px 14px rgba(20, 18, 42, .22);
+}
+.a11y-link svg { fill: currentColor; flex: none; }
+.a11y-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 .skip { position: absolute; left: -9999px; top: calc(env(safe-area-inset-top, 0px) + 8px); z-index: 100; padding: 10px 14px; background: #fdd66c; color: #1c3055; font-weight: 800; border: 3px solid #1c3055; }
 .skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); }
-.motion {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; cursor: pointer;
-  font-family: var(--font-pixel); font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
-  background: var(--motion-bg); color: var(--motion-ink); border: 3px solid var(--motion-ink); box-shadow: 3px 3px 0 var(--motion-ink);
-}
-.motion i { width: 10px; height: 12px; border-inline: 3px solid currentColor; }
-.motion[aria-pressed="true"] i { border: 0; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 10px solid currentColor; }
 html.still *, html.still *::before, html.still *::after { animation-play-state: paused !important; }
-@media (prefers-reduced-motion: reduce) { .motion { display: none; } }
 .top-actions { display: flex; align-items: center; gap: 10px; }
+/* the smallest phones: the llama head alone, the name stays for screen readers */
+@media (max-width: 360px) { .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -327,10 +328,10 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   <a class="brandmark pixel" href="#top">
     <img class="for-light" src="assets/llamaHeadB.png" alt="">
     <img class="for-dark" src="assets/llamaHead.png" alt="">
-    Tandy Messenger
+    <span class="brand-name">Tandy Messenger</span>
   </a>
   <div class="top-actions">
-    <button class="motion" id="motion" type="button" aria-pressed="false"><i aria-hidden="true"></i><span>Pause motion</span></button>
+    <a class="a11y-link" href="accessible.html"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="4.2" r="2.2"/><path d="M4 7.6l8 1.2 8-1.2.4 2-5.6 1.2v3.4l2.4 7.6-2 .6-3.2-6.8-3.2 6.8-2-.6 2.4-7.6v-3.4L3.6 9.6z"/></svg><span>Accessible version</span></a>
     <button class="theme" id="theme" type="button" aria-label="Switch between light and dark"><i class="moon for-light"></i><i class="sun for-dark"></i></button>
   </div>
 </header>
@@ -494,17 +495,20 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   const darkMQ = matchMedia('(prefers-color-scheme: dark)');
   const root = document.documentElement;
 
-  // ---------- pause motion (WCAG 2.2.2: anything that moves by itself for over 5 seconds can be stopped) ----------
+  // ---------- motion rests (WCAG 2.2.2, IS 5568) ----------
+  // Nothing moves by itself for more than 5 seconds: ambient animation (stars, clouds, floating art) runs while
+  // the visitor scrolls, moves or taps, and rests 5 seconds after the last of those. Scroll-driven animation
+  // follows the visitor, so it needs no pause. With "reduce motion" on, nothing animates at all.
   const ambient = [], loop = t => (ambient.push(t), t);
-  let still = false, stillAt = 0;
-  const motionBtn = document.getElementById('motion');
-  motionBtn.addEventListener('click', () => {
-    still = !still;
-    root.classList.toggle('still', still);
-    ambient.forEach(t => still ? t.pause() : t.resume());
-    motionBtn.setAttribute('aria-pressed', String(still));
-    motionBtn.querySelector('span').textContent = still ? 'Play motion' : 'Pause motion';
-  });
+  let still = false, stillAt = 0, restTimer = 0;
+  const rest = () => { still = true; root.classList.add('still'); ambient.forEach(t => t.pause()); };
+  const wake = () => {
+    clearTimeout(restTimer); restTimer = setTimeout(rest, 5000);
+    if (!still) return;
+    still = false; root.classList.remove('still'); ambient.forEach(t => t.resume());
+  };
+  ['scroll', 'pointermove', 'pointerdown', 'keydown', 'touchstart', 'wheel'].forEach(e => addEventListener(e, wake, { passive: true }));
+  wake();
   const rand = (a, b) => a + Math.random() * (b - a);
   const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : darkMQ.matches;
   const css = name => getComputedStyle(root).getPropertyValue(name).trim();

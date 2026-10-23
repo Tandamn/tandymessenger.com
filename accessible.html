@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tandy Messenger · Accessible version</title>
+<meta name="description" content="Tandy Messenger is a group chat app with an AI llama who makes polls, quizzes and games for your friends. Coming soon.">
+<link rel="canonical" href="https://tandymessenger.com/">
+<link rel="icon" type="image/png" href="assets/iconB.png">
+<style>
+:root { --bg: #ffffff; --ink: #1c3055; --ink-2: #3d4f72; --link: #2a4fa0; --line: #c9d3e3; --panel: #f2f5fa; --focus: #b3261e; color-scheme: light; --scale: 1; --leading: 1.6; }
+@media (prefers-color-scheme: dark) { :root:not(.light) { --bg: #1b1932; --ink: #f7eed8; --ink-2: #d9cdf3; --link: #a9cdfe; --line: #4a4570; --panel: #262345; --focus: #fcb4b6; color-scheme: dark; } }
+:root.contrast { --bg: #000000; --ink: #ffffff; --ink-2: #ffffff; --link: #ffff00; --line: #ffffff; --panel: #000000; --focus: #ffff00; color-scheme: dark; }
+* { box-sizing: border-box; }
+html { font-size: calc(100% * var(--scale)); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height: var(--leading); }
+:root.readable body { font-family: Verdana, Tahoma, Arial, sans-serif; letter-spacing: .02em; word-spacing: .08em; }
+:root.spacing { --leading: 2; }
+:root.spacing p, :root.spacing li { margin-bottom: 1.2em; }
+a { color: var(--link); }
+:root.links a { background: var(--link); color: var(--bg); padding: 0 .2em; text-decoration: underline; text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.skip { position: absolute; left: -9999px; } .skip:focus { left: 1rem; top: .5rem; background: var(--bg); padding: .5rem 1rem; z-index: 10; }
+.tools { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 2px solid var(--line);
+  padding: .6rem max(1rem, env(safe-area-inset-right, 0px)) .6rem max(1rem, env(safe-area-inset-left, 0px)); }
+.tools-in { max-width: 70ch; margin-inline: auto; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.tools h2 { font-size: 1rem; margin: 0 .5rem 0 0; }
+.tools button { font: inherit; font-size: .95rem; min-height: 44px; padding: .3rem .8rem; color: var(--ink); background: var(--bg); border: 2px solid var(--ink); border-radius: .4rem; cursor: pointer; }
+.tools button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+main { max-width: 70ch; margin-inline: auto; padding: 1.5rem max(1rem, env(safe-area-inset-right, 0px)) 4rem max(1rem, env(safe-area-inset-left, 0px)); }
+h1 { font-size: 2rem; line-height: 1.2; margin: .5rem 0 1rem; }
+h2 { font-size: 1.4rem; line-height: 1.3; margin: 2rem 0 .5rem; }
+h3 { font-size: 1.15rem; margin: 1.2rem 0 .3rem; }
+.lead { font-size: 1.2rem; }
+.back { display: inline-block; margin-top: .5rem; }
+footer { border-top: 2px solid var(--line); margin-top: 3rem; padding-top: 1rem; }
+footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<section class="tools" aria-labelledby="tools-title">
+  <div class="tools-in">
+    <h2 id="tools-title">Display</h2>
+    <button type="button" id="t-smaller">A− Smaller text</button>
+    <button type="button" id="t-bigger">A+ Larger text</button>
+    <button type="button" data-toggle="contrast" aria-pressed="false">High contrast</button>
+    <button type="button" data-toggle="readable" aria-pressed="false">Readable font</button>
+    <button type="button" data-toggle="links" aria-pressed="false">Highlight links</button>
+    <button type="button" data-toggle="spacing" aria-pressed="false">Line spacing</button>
+    <button type="button" id="t-reset">Reset</button>
+    <p id="tools-status" role="status" aria-live="polite" style="margin:0;flex-basis:100%;min-height:0"></p>
+  </div>
+</section>
+<main id="main">
+<a class="back" href="./">← Back to the animated site</a>
+
+<h1>Tandy Messenger: group chats that build things</h1>
+<p class="lead">The AI group chat app.</p>
+<p>Tandy is the AI llama in your group chat. Ask him for a vote, a quiz or a game, and it pops up for everyone, ready to play.</p>
+<p>Coming soon to the App Store and Google Play.</p>
+
+<h2>How it works</h2>
+<ol>
+<li><h3>Chat like always.</h3><p>Your friends, your plans, your inside jokes.</p></li>
+<li><h3>Ask Tandy. Just you two.</h3><p>Only you see what he makes until you share it.</p></li>
+<li><h3>Share it. Play together.</h3><p>Everyone taps, votes and plays right in the chat.</p></li>
+</ol>
+<p>For example: Maya asks the group "Friday night, who's in?". You privately ask Tandy to make a vote for Friday, he builds one with Pizza night, Bowling and Movie marathon, you share it, and everyone votes in the chat. Pizza wins.</p>
+
+<h2>Ask for anything fun</h2>
+<p>A few things friends make with Tandy. Or describe something new and watch it appear.</p>
+<ul>
+<li><strong>Votes</strong>: dinner? dates? settled.</li>
+<li><strong>Quizzes</strong>: how well do you know us.</li>
+<li><strong>Spin the wheel</strong>: let fate pick the movie.</li>
+<li><strong>Who's in?</strong>: no more counting hands.</li>
+<li><strong>Would you rather</strong>: chaos, but friendly.</li>
+<li><strong>Split the bill</strong>: who owes who, solved.</li>
+<li><strong>Bingo</strong>: for the family dinner.</li>
+<li><strong>Countdowns</strong>: 12 days to the trip.</li>
+<li><strong>Your idea here</strong>: describe it, Tandy builds it.</li>
+</ul>
+
+<h2>Coming soon</h2>
+<p>Tandy Messenger lands on iPhone and Android soon. Bring your group.</p>
+
+<h2>Questions, answered</h2>
+<h3>What is Tandy Messenger?</h3>
+<p>Tandy Messenger is a group chat app with Tandy, an AI llama who makes polls, quizzes, games and other little apps for your group, right inside the chat.</p>
+<h3>When is Tandy Messenger coming out?</h3>
+<p>Soon. Tandy Messenger is on its way to the App Store and Google Play.</p>
+<h3>Will Tandy Messenger be on iPhone and Android?</h3>
+<p>Yes. Tandy Messenger is coming to both iPhone and Android.</p>
+<h3>Who sees what I ask Tandy?</h3>
+<p>Only you. What Tandy makes stays private until you choose to share it with the group.</p>
+<h3>Who makes Tandy Messenger?</h3>
+<p>Tandy Messenger is made by <a href="https://www.tandamn.com/">Tandamn!</a>, a small company that makes things worth a damn.</p>
+
+<footer>
+<p>Made with love by Tandamn! · © 2026</p>
+<ul>
+<li><a href="https://www.tandamn.com/">Tandamn!</a></li>
+<li><a href="accessibility.html">Accessibility statement</a></li>
+<li><a href="privacy.html">Privacy</a></li>
+</ul>
+</footer>
+
+</main>
+<script>
+(() => {
+  // display tools: classes on <html>, nothing stored, no outside code
+  const root = document.documentElement, status = document.getElementById('tools-status');
+  const say = t => { status.textContent = t; };
+  let scale = 1;
+  const setScale = v => { scale = Math.min(2, Math.max(.9, Math.round(v * 100) / 100)); root.style.setProperty('--scale', scale); say('Text size ' + Math.round(scale * 100) + '%'); };
+  document.getElementById('t-bigger').onclick = () => setScale(scale + .15);
+  document.getElementById('t-smaller').onclick = () => setScale(scale - .15);
+  document.querySelectorAll('[data-toggle]').forEach(b => b.addEventListener('click', () => {
+    const on = root.classList.toggle(b.dataset.toggle);
+    b.setAttribute('aria-pressed', String(on));
+    say(b.textContent + (on ? ' on' : ' off'));
+  }));
+  document.getElementById('t-reset').onclick = () => {
+    root.className = ''; setScale(1);
+    document.querySelectorAll('[data-toggle]').forEach(b => b.setAttribute('aria-pressed', 'false'));
+    say('Display reset');
+  };
+})();
+</script>
+</body>
+</html>
