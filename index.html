@@ -151,19 +151,20 @@ main { position: relative; z-index: 10; }
 .hero {
   min-height: 100svh; display: grid; align-items: center; gap: 24px;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  padding-block: calc(env(safe-area-inset-top, 0px) + 96px) 64px;
+  padding-block: calc(env(safe-area-inset-top, 0px) + clamp(64px, 11svh, 96px)) clamp(16px, 5svh, 64px);
   max-width: 1240px; margin-inline: auto;
 }
-.hero-copy { display: grid; gap: 22px; justify-items: start; min-width: 0; }
-.wordmark { width: min(460px, 100%); }
+/* sizes also follow the screen's height, so the whole opening fits on a short laptop screen */
+.hero-copy { display: grid; gap: clamp(10px, 2.4svh, 22px); justify-items: start; min-width: 0; }
+.wordmark { width: min(460px, 100%, 50svh); }
 .sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .kicker { margin: 0 0 -10px; font-size: 13px; color: var(--ink-2); }
 .hero h1 {
   margin: 0; font-weight: 900; letter-spacing: -.035em; line-height: .98;
-  font-size: clamp(42px, 6.2vw, 84px); text-wrap: balance;
+  font-size: clamp(36px, min(6.2vw, 8.4svh), 84px); text-wrap: balance;
 }
 .hero h1 em { font-style: normal; color: var(--brand); -webkit-text-stroke: 0; }
-.lede { margin: 0; max-width: 36ch; font-size: clamp(18px, 1.7vw, 21px); color: var(--ink-2); text-wrap: pretty; }
+.lede { margin: 0; max-width: 36ch; font-size: clamp(16px, min(1.7vw, 2.6svh), 21px); color: var(--ink-2); text-wrap: pretty; }
 .stores { display: flex; flex-wrap: wrap; gap: 12px; }
 .store {
   display: inline-grid; gap: 0; padding: 10px 16px 9px; min-width: 156px;
@@ -173,7 +174,7 @@ main { position: relative; z-index: 10; }
 .store b { font-size: 18px; font-weight: 800; line-height: 1.2; }
 
 .phones { position: relative; height: min(640px, 78svh); min-width: 0; perspective: 1400px; }
-.phones .phone { position: absolute; top: 50%; left: 50%; --w: clamp(170px, 19vw, 250px); }
+.phones .phone { position: absolute; top: 50%; left: 50%; --w: clamp(150px, min(19vw, 34svh), 250px); }
 .phones .p1 { transform: translate(-112%, -46%) rotate(-9deg); }
 .phones .p2 { transform: translate(-50%, -52%); z-index: 2; }
 .phones .p3 { transform: translate(12%, -46%) rotate(9deg); }
@@ -225,7 +226,8 @@ main { position: relative; z-index: 10; }
 .check li { display: flex; align-items: center; gap: .55em; padding: .5em .6em; border-radius: .6em; background: var(--bubble-in); font-size: .9em; }
 .check i { flex: none; width: 1.05em; height: 1.05em; border: 2px solid var(--ink); border-radius: .3em; }
 .check .done { color: var(--ink-2); text-decoration: line-through; }
-.check .done i { background: var(--mint); }
+.check .done i { background: var(--ink); position: relative; }
+.check .done i::after { content: "✓"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--bg); font-size: .75em; font-weight: 800; line-height: 1; }
 .check small { margin-left: auto; font-size: .78em; color: var(--ink-2); text-decoration: none; }
 .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5em; padding: .6em .8em; }
 .quiz-grid span { border-radius: .7em; padding: 1.1em .4em; text-align: center; font-weight: 700; color: #1c3055; }
@@ -267,6 +269,11 @@ main { position: relative; z-index: 10; }
 .shelf h2 { margin: 0; font-size: clamp(34px, 5vw, 64px); font-weight: 900; letter-spacing: -.03em; line-height: 1; text-wrap: balance; }
 .shelf .sub { margin: 0; color: var(--ink-2); max-width: 40ch; }
 .shelf-head { display: grid; gap: 10px; max-width: 1240px; width: 100%; margin-inline: auto; }
+.shelf-nav { display: flex; gap: 10px; margin-top: 4px; }
+.nav-btn { width: 48px; height: 44px; border: 3px solid var(--ink); background: var(--bg); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); font: 700 20px/1 var(--font-display); cursor: pointer; }
+.nav-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.track { cursor: grab; user-select: none; }
+.track:active { cursor: grabbing; }
 .track { display: flex; gap: 22px; width: max-content; padding-block: 16px 28px; }
 .tile {
   width: clamp(200px, 22vw, 260px); aspect-ratio: 4 / 5; flex: none;
@@ -318,6 +325,8 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   .tile b { font-size: 19px; }
   .tile small { font-size: 11px; }
   .tile.wild { grid-column: 1 / -1; min-height: 0; }
+  .shelf-nav { display: none; }
+  .track { cursor: auto; user-select: auto; }
   .story { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: start; gap: 12px; padding-block: calc(env(safe-area-inset-top, 0px) + 72px) 16px; }
   .steps { min-height: 118px; gap: 0; }
   .steps .eyebrow { display: none; }
@@ -331,6 +340,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   .step { opacity: 1; position: static; }
   .shelf { height: auto; padding-block: 80px; }
   .track { flex-wrap: wrap; width: auto; max-width: 1240px; margin-inline: auto; }
+  .shelf-nav { display: none; }
 }
 </style>
 </head>
@@ -458,6 +468,10 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       <p class="pixel" style="margin:0;font-size:13px;color:var(--ink-2)">Useful or fun, Tandy whips it up</p>
       <h2>Ask for anything.</h2>
       <p class="sub">Things friends and families make with Tandy, for getting things done and for fun. Or describe something new and watch it appear.</p>
+      <div class="shelf-nav">
+        <button type="button" class="nav-btn" id="shelfPrev" aria-label="Previous ideas">←</button>
+        <button type="button" class="nav-btn" id="shelfNext" aria-label="More ideas">→</button>
+      </div>
     </div>
     <div class="wrap">
       <div class="track" id="track">
@@ -629,9 +643,10 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   // ---------- one gesture = one stop (a fast flick can't fly past the scenes) ----------
   // stops: [{ y, fill, t }]; gaps longer than a screen get extra stops unless fill is false (inside a pinned scene).
   // t is the animation's own time at that stop: a move between two such stops takes that long, so the story plays at its natural pace
-  function stepScroll(baseStops) {
+  // sideways(): [min, max] scroll range where left/right also steps (the shelf), or null outside it
+  function stepScroll(baseStops, sideways = () => null) {
     gsap.registerPlugin(Observer, ScrollToPlugin);
-    let busy = false, fresh = true, lastT = 0, lastD = 0, movedAt = -1e9;
+    let busy = false, fresh = true, lastT = 0, lastD = 0, movedAt = -1e9, moving = null;
     // the phone's own swipe scrolling would fly on alongside the steps; keep pinch zoom, let only the steps move the page
     document.documentElement.style.touchAction = 'pinch-zoom';
     document.documentElement.style.overscrollBehavior = 'none';
@@ -657,28 +672,43 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       if (e.timeStamp - lastT > 120 || (d > lastD * 1.3 + 2 && e.timeStamp - movedAt > 300)) fresh = true;
       lastT = e.timeStamp; lastD = d;
     }, { passive: true, capture: true });
-    const go = dir => {
-      if (busy || !fresh) return;
-      const y = scrollY, list = stops();
-      const here = list.find(s => Math.abs(s.y - y) <= 4);
+    // A new push while a step is still playing doesn't wait: it carries on to the next stop
+    // (or, the other way, back to the stop it came from). Without one, each step plays at its own pace.
+    const go = (dir, within) => {
+      if (!fresh) return;
+      const list = stops();
+      const from = busy && moving ? moving.target : null;
+      const y = from ? from.y : scrollY;
+      const here = from || list.find(s => Math.abs(s.y - y) <= 4);
       const target = dir > 0 ? list.find(s => s.y > y + 4) : [...list].reverse().find(s => s.y < y - 4);
-      if (!target) return;
+      if (!target || (within && (target.y < within[0] - 4 || target.y > within[1] + 4))) return;
+      if (moving) moving.tween.kill();
       busy = true; fresh = false; movedAt = performance.now();
       const paced = here && here.t !== undefined && target.t !== undefined;
-      gsap.to(window, { scrollTo: { y: target.y, autoKill: false },
-        duration: paced ? gsap.utils.clamp(1.2, 3.5, Math.abs(target.t - here.t)) : gsap.utils.clamp(.9, 1.8, .7 + Math.abs(target.y - y) / innerHeight * .5),
-        ease: paced ? 'sine.inOut' : 'power2.inOut', onComplete: () => { busy = false; } });
+      // the part of this step's length still to travel (a turn-around mid-move is short)
+      const left = Math.abs(target.y - scrollY) / Math.max(1, Math.abs(target.y - here.y));
+      const tween = gsap.to(window, { scrollTo: { y: target.y, autoKill: false },
+        duration: paced ? gsap.utils.clamp(.6, 3.5, Math.abs(target.t - here.t) * Math.min(left, 1.6)) : gsap.utils.clamp(.6, 1.8, .7 + Math.abs(target.y - scrollY) / innerHeight * .5),
+        // picking up mid-move starts at speed instead of from a standstill
+        ease: from ? 'sine.out' : paced ? 'sine.inOut' : 'power2.inOut',
+        onComplete: () => { busy = false; moving = null; } });
+      moving = { tween, target };
     };
+    // a sideways swipe moves the shelf (and nothing outside it)
+    const side = dir => { const r = sideways(); if (r) go(dir, r); };
     Observer.create({ target: window, type: 'wheel,touch', wheelSpeed: -1, tolerance: 6, preventDefault: true,
-      onPress: () => { fresh = true; }, onUp: () => go(1), onDown: () => go(-1) });
+      onPress: () => { fresh = true; }, onUp: () => go(1), onDown: () => go(-1), onLeft: () => side(1), onRight: () => side(-1) });
     addEventListener('keydown', e => {
       if (e.target.closest('input, textarea, select, [contenteditable]')) return;
       const space = e.key === ' ' && !e.target.closest('button, a, summary');
+      if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && sideways()) { e.preventDefault(); fresh = true; side(e.key === 'ArrowRight' ? 1 : -1); return; }
       const dir = e.key === 'ArrowDown' || e.key === 'PageDown' || (space && !e.shiftKey) ? 1
         : e.key === 'ArrowUp' || e.key === 'PageUp' || (space && e.shiftKey) ? -1 : 0;
       if (!dir) return;
       e.preventDefault(); fresh = true; go(dir);
     });
+    // for buttons and drags: one step sideways, kept inside the shelf
+    return { side: dir => { fresh = true; side(dir); } };
   }
 
   // ---------- scroll ----------
@@ -783,7 +813,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     // a section's top, kept clear of the fixed header
     const topOf = sel => document.querySelector(sel).getBoundingClientRect().top + scrollY - document.querySelector('.top').offsetHeight;
     // one stop per beat of the story: the chat, its messages, the private ask, the app built, shared and voted
-    stepScroll(() => [
+    const shelfStep = stepScroll(() => [
       { y: 0, fill: false },
       { y: story.start, fill: false, t: 0 },
       { y: story.labelToScroll('ask'), fill: false, t: tl.labels.ask },
@@ -793,7 +823,14 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       ...(ridden ? [{ y: ridden.start }, { y: ridden.end }] : [{ y: topOf('#shelf') }]),
       { y: topOf('#soon') },
       { y: topOf('#faq') },
-    ]);
+    ], () => ridden && scrollY >= ridden.start - 4 && scrollY <= ridden.end + 4 ? [ridden.start, ridden.end] : null);
+    if (ridden) {
+      // drag the cards with the mouse, or use the arrows
+      Observer.create({ target: '#track', type: 'pointer', dragMinimum: 8, tolerance: 30,
+        onLeft: () => shelfStep.side(1), onRight: () => shelfStep.side(-1) });
+      document.getElementById('shelfNext').addEventListener('click', () => shelfStep.side(1));
+      document.getElementById('shelfPrev').addEventListener('click', () => shelfStep.side(-1));
+    }
 
     return () => {};
   });
