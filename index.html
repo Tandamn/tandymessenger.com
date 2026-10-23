@@ -155,9 +155,12 @@ main { position: relative; z-index: 10; }
   padding-block: calc(env(safe-area-inset-top, 0px) + clamp(64px, 11svh, 96px)) clamp(16px, 5svh, 64px);
   max-width: 1240px; margin-inline: auto;
 }
+.mstory { display: none; }  /* phones only (see the 860 px rules) */
 /* sizes also follow the screen's height, so the whole opening fits on a short laptop screen */
 .hero-copy { display: grid; gap: clamp(10px, 2.4svh, 22px); justify-items: start; min-width: 0; }
-.wordmark { width: min(460px, 100%, 50svh); }
+/* the text starts near the top bar instead of floating in the middle of the tall phone column */
+@media (min-width: 861px) { .hero-copy { align-self: start; padding-top: clamp(8px, 3svh, 32px); } }
+.wordmark { width: min(420px, 100%, 46svh); }  /* the art is cropped to its letters, so the same letter size takes less width */
 .sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .kicker { margin: 0 0 -10px; font-size: 13px; color: var(--ink-2); }
 .hero h1 {
@@ -314,10 +317,12 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
 @media (max-width: 860px) {
   body { font-size: 16px; }
   .hero { grid-template-columns: minmax(0, 1fr); text-align: left; padding-block: calc(env(safe-area-inset-top, 0px) + 84px) 24px; }
-  /* one phone, not three: the fan is too busy on a phone */
-  .phones { height: 440px; }
-  .phones .phone { --w: 200px; }
-  .phones .p1, .phones .p3 { display: none; }
+  /* all three phones in a row you swipe sideways (native scroll snapping), full size and readable */
+  .phones { height: auto; display: flex; gap: 16px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none; perspective: none;
+    margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 8px calc((100vw - 200px) / 2) 24px; }  /* the row spans the screen, so each end phone can stop dead centre */
+  .phones::-webkit-scrollbar { display: none; }
+  .phones .phone { --w: 200px; position: relative; top: auto; left: auto; transform: none; flex: none; scroll-snap-align: center; }
   /* the shelf: a grid that shows every tile, no sideways ride */
   .shelf { height: auto; overflow: visible; padding-block: 88px 32px; gap: 24px; }
   .track { display: grid; grid-template-columns: 1fr 1fr; width: auto; gap: 14px; padding-block: 0 8px; }
@@ -331,6 +336,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   .steps { min-height: 0; display: block; margin-bottom: 20px; }
   .story .steps .eyebrow { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; }
   .mstory { display: grid; gap: 48px; }
+  #storyPhone, .steps .step { display: none; }
   .mstep { display: grid; gap: 16px; justify-items: center; }
   .story .mstep .step { position: static; opacity: 1; justify-self: stretch; }
   .story .mstep .phone { --w: min(240px, 66vw); }
@@ -379,8 +385,8 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   <!-- 1 · hero -->
   <section class="hero wrap">
     <div class="hero-copy">
-      <img class="wordmark for-light" src="assets/tandy-wordmark-light.webp" alt="Tandy Messenger logo" width="1908" height="824">
-      <img class="wordmark for-dark" src="assets/tandy-wordmark-dark.webp" alt="Tandy Messenger logo" width="1908" height="824">
+      <img class="wordmark for-light" src="assets/tandy-wordmark-light.webp" alt="Tandy Messenger logo" width="1752" height="602">
+      <img class="wordmark for-dark" src="assets/tandy-wordmark-dark.webp" alt="Tandy Messenger logo" width="1706" height="580">
       <p class="kicker pixel">The AI group chat app</p>
       <h1><span class="sr">Tandy Messenger: </span>Group chats that <em>build things.</em></h1>
       <p class="lede">Tandy is the AI llama in your group chat. Ask him for a checklist, a plan, a vote or a game, and it pops up for everyone, ready to use.</p>
@@ -489,13 +495,13 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     <div class="wrap">
       <div class="track" id="track">
         <div class="tile" style="background:#bfe5d4"><span class="em" aria-hidden="true">✅</span><div><b>Checklists</b><small>PACKING, GROCERIES, TO-DOS</small></div></div>
-        <div class="tile" style="background:#79b1fe"><span class="em" aria-hidden="true">🗺️</span><div><b>Plans</b><small>THE TRIP, DAY BY DAY</small></div></div>
-        <div class="tile" style="background:#fdd66c"><span class="em" aria-hidden="true">📅</span><div><b>Find a time</b><small>WHEN CAN EVERYONE MEET</small></div></div>
-        <div class="tile" style="background:#f0e7c7"><span class="em" aria-hidden="true">🧾</span><div><b>Split the bill</b><small>WHO OWES WHO, SOLVED</small></div></div>
-        <div class="tile" style="background:#fca2a5"><span class="em" aria-hidden="true">🗳️</span><div><b>Votes</b><small>DINNER? DATES? SETTLED.</small></div></div>
-        <div class="tile" style="background:#a688e2"><span class="em" aria-hidden="true">🙋</span><div><b>Who's in?</b><small>NO MORE COUNTING HANDS</small></div></div>
-        <div class="tile" style="background:#fdd66c"><span class="em" aria-hidden="true">🧠</span><div><b>Quizzes</b><small>HOW WELL DO YOU KNOW US</small></div></div>
+        <div class="tile" style="background:#79b1fe"><span class="em" aria-hidden="true">🗺️</span><div><b>Trip plans</b><small>THE TRIP, DAY BY DAY</small></div></div>
+        <div class="tile" style="background:#f0e7c7"><span class="em" aria-hidden="true">💸</span><div><b>Split the bill</b><small>WHO OWES WHO, SOLVED</small></div></div>
+        <div class="tile" style="background:#a688e2"><span class="em" aria-hidden="true">🙋</span><div><b>Who's in?</b><small>RSVPS WITHOUT THE CHAOS</small></div></div>
+        <div class="tile" style="background:#fdd66c"><span class="em" aria-hidden="true">⏳</span><div><b>Countdowns</b><small>12 DAYS TO THE TRIP</small></div></div>
+        <div class="tile" style="background:#fca2a5"><span class="em" aria-hidden="true">🧠</span><div><b>Quizzes</b><small>HOW WELL DO YOU KNOW US</small></div></div>
         <div class="tile" style="background:#bfe5d4"><span class="em" aria-hidden="true">🎡</span><div><b>Spin the wheel</b><small>LET FATE PICK THE MOVIE</small></div></div>
+        <div class="tile" style="background:#79b1fe"><span class="em" aria-hidden="true">🎲</span><div><b>Truth or dare</b><small>GAME NIGHT, READY</small></div></div>
         <div class="tile wild"><span class="em" aria-hidden="true">✨</span><div><b>Your idea here</b><small>DESCRIBE IT. TANDY BUILDS IT.</small></div></div>
       </div>
     </div>
@@ -679,12 +685,13 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     };
     // trackpad momentum fades smoothly; a new push comes after a pause or speeds up again (the Lethargy idea),
     // so a small new push always counts and the momentum tail never chains extra steps
-    addEventListener('wheel', e => {
+    const onWheel = e => {
       const d = Math.abs(e.deltaY);
       // (a speed-up right after a move starts is the same swipe still ramping up)
       if (e.timeStamp - lastT > 120 || (d > lastD * 1.3 + 2 && e.timeStamp - movedAt > 300)) fresh = true;
       lastT = e.timeStamp; lastD = d;
-    }, { passive: true, capture: true });
+    };
+    addEventListener('wheel', onWheel, { passive: true, capture: true });
     // A new push while a step is still playing doesn't wait: it carries on to the next stop
     // (or, the other way, back to the stop it came from). Without one, each step plays at its own pace.
     const go = (dir, within) => {
@@ -709,9 +716,9 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     };
     // a sideways swipe moves the shelf (and nothing outside it)
     const side = dir => { const r = sideways(); if (r) go(dir, r); };
-    Observer.create({ target: window, type: 'wheel,touch', wheelSpeed: -1, tolerance: 6, preventDefault: true,
+    const obs = Observer.create({ target: window, type: 'wheel,touch', wheelSpeed: -1, tolerance: 6, preventDefault: true,
       onPress: () => { fresh = true; }, onUp: () => go(1), onDown: () => go(-1), onLeft: () => side(1), onRight: () => side(-1) });
-    addEventListener('keydown', e => {
+    const onKey = e => {
       if (e.target.closest('input, textarea, select, [contenteditable]')) return;
       const space = e.key === ' ' && !e.target.closest('button, a, summary');
       if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && sideways()) { e.preventDefault(); fresh = true; side(e.key === 'ArrowRight' ? 1 : -1); return; }
@@ -719,19 +726,31 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
         : e.key === 'ArrowUp' || e.key === 'PageUp' || (space && e.shiftKey) ? -1 : 0;
       if (!dir) return;
       e.preventDefault(); fresh = true; go(dir);
-    });
-    // for buttons and drags: one step sideways, kept inside the shelf
-    return { side: dir => { fresh = true; side(dir); } };
+    };
+    addEventListener('keydown', onKey);
+    return {
+      // for buttons and drags: one step sideways, kept inside the shelf
+      side: dir => { fresh = true; side(dir); },
+      // back to plain scrolling (the window became phone-sized)
+      kill: () => {
+        if (moving) moving.tween.kill();
+        obs.kill();
+        removeEventListener('wheel', onWheel, { capture: true });
+        removeEventListener('keydown', onKey);
+        document.documentElement.style.touchAction = '';
+        document.documentElement.style.overscrollBehavior = '';
+      },
+    };
   }
 
   // ---------- phones: simple ----------
   // On a phone the page scrolls natively and nothing is pinned. "How it works" is three still screens
   // (the chat, the private ask with the finished app, the shared vote), each under its caption.
-  const phoneLayout = matchMedia('(max-width: 860px)').matches;
-  if (phoneLayout) {
+  {
     const src = document.getElementById('storyPhone');
     const list = document.createElement('div'); list.className = 'mstory';
-    [...document.querySelectorAll('#story .step')].forEach((step, i) => {
+    [...document.querySelectorAll('#story .steps .step')].forEach((orig, i) => {
+      const step = orig.cloneNode(true);
       const item = document.createElement('div'); item.className = 'mstep';
       const shot = src.cloneNode(true);
       shot.removeAttribute('id'); shot.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
@@ -740,7 +759,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       if (i === 2) shot.querySelectorAll('.opt[data-v]').forEach(o => o.style.setProperty('--v', o.dataset.v + '%'));
       item.append(step, shot); list.append(item);
     });
-    src.replaceWith(list);
+    src.after(list);
   }
 
   // ---------- scroll ----------
@@ -750,15 +769,23 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
   // resting state for reduced motion: the shared vote with its results
   const fillVotes = () => document.querySelectorAll('#sharedCard .opt').forEach(o => o.style.setProperty('--v', o.dataset.v + '%'));
 
-  mm.add('(prefers-reduced-motion: reduce)', () => { if (phoneLayout) return; fillVotes(); gsap.set('#private', { display: 'none' }); });
+  // the shelf arrows talk to whichever desktop setup is current
+  let shelfStep = null;
+  document.getElementById('shelfNext').addEventListener('click', () => shelfStep && shelfStep.side(1));
+  document.getElementById('shelfPrev').addEventListener('click', () => shelfStep && shelfStep.side(-1));
 
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
-    const narrow = innerWidth <= 860;
-    if (phoneLayout) {
-      const p2 = document.querySelector('#phones .p2');
-      gsap.set(p2, { x: 0, y: 0, xPercent: -50, yPercent: -52 });
+  // One setup per screen size and motion preference. Crossing 860 px (resizing the window, turning a tablet)
+  // reverts everything the old setup made, pins and scroll stepping included, and runs the right one.
+  mm.add({ phone: '(max-width: 860px)', desktop: '(min-width: 861px)', reduce: '(prefers-reduced-motion: reduce)' }, ctx => {
+    const { desktop, reduce } = ctx.conditions;
+    if (reduce) { if (desktop) { fillVotes(); gsap.set('#private', { display: 'none' }); } return; }
+    const narrow = false;
+    if (!desktop) {
+      // the phone row opens on the middle phone (the chat with the vote)
+      const row = document.getElementById('phones'), mid = row.querySelector('.p2');
+      row.scrollLeft = mid.offsetLeft - (row.clientWidth - mid.offsetWidth) / 2;
       gsap.from('.hero-copy > *', { y: 20, opacity: 0, duration: .6, ease: 'power3.out', stagger: .06 });
-      gsap.from(p2, { y: 40, opacity: 0, duration: .8, ease: 'power3.out', delay: .2 });
+      gsap.from(row, { y: 40, opacity: 0, duration: .8, ease: 'power3.out', delay: .2 });
       gsap.utils.toArray('.mstep, .tile').forEach(el => gsap.from(el, { y: 24, opacity: 0, duration: .5, ease: 'power2.out',
         scrollTrigger: { trigger: el, start: 'top 92%', once: true } }));
       gsap.timeline({ scrollTrigger: { trigger: '#soon', start: 'top 80%', once: true } })
@@ -793,18 +820,19 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     }
 
     // story: one phone, the chat plays as you scroll
-    const steps = gsap.utils.toArray('.step');
+    // only the desktop story's own elements (the phone copies share the class names)
+    const steps = gsap.utils.toArray('.steps .step');
     const typing = document.getElementById('typing'), reply = document.getElementById('tandyReply');
     gsap.set('#private', { y: 0, yPercent: 102 });  // hidden below the screen, in percent (see HOME above)
-    gsap.set('.s3, #private .p1, #private .p2, #share, #buildCard', { opacity: 0 });
-    gsap.set('.s3', { display: 'none' });
+    gsap.set('#storyPhone .s3, #private .p1, #private .p2, #share, #buildCard', { opacity: 0 });
+    gsap.set('#storyPhone .s3', { display: 'none' });
     gsap.set('#bits b', { x: () => rand(-160, 160), y: () => rand(-260, 120), rotation: () => rand(-180, 180), scale: 0 });
     gsap.set(typing.children, { y: 0 });
     loop(gsap.to(typing.children, { y: -4, duration: .3, ease: 'steps(2)', yoyo: true, repeat: -1, stagger: .1 }));
     const showStep = (n) => (tl, at) => steps.forEach((s, i) => tl.to(s, { opacity: i === n ? 1 : (narrow ? 0 : .22), duration: narrow ? .02 : .3 }, at));
 
     const tl = gsap.timeline({ scrollTrigger: { trigger: '#story', start: 'top top', end: '+=320%', pin: true, scrub: .8 } });
-    tl.from('.s1', { y: 30, opacity: 0, stagger: .4, duration: .5 })
+    tl.from('#storyPhone .s1', { y: 30, opacity: 0, stagger: .4, duration: .5 })
       .add(() => {}, '+=.3');
     showStep(0)(tl, 0);
     // 2 · tap the llama, private sheet slides up
@@ -824,15 +852,15 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     showStep(1)(tl, 'ask+=.15');
     // 3 · shared to the group, everyone votes
     tl.to('#private', { yPercent: 102, duration: .6, ease: 'power2.in' }, 'share')
-      .set('.s1:first-child', { display: 'none' }, 'share+=.6')
-      .set('.s3', { display: '' }, 'share+=.6')
+      .set('#storyPhone .s1:first-child', { display: 'none' }, 'share+=.6')
+      .set('#storyPhone .s3', { display: '' }, 'share+=.6')
       .to('#sharedCard', { opacity: 1, scale: 1, duration: .4, ease: 'back.out(2)' }, 'share+=.6')
       .from('#sharedCard', { scale: .6 }, '<');
     document.querySelectorAll('#sharedCard .opt').forEach((o, i) => tl.fromTo(o, { '--v': '0%' }, { '--v': o.dataset.v + '%', duration: .6, ease: 'power2.out' }, `share+=${1 + i * .15}`));
-    tl.to('.reacts.s3', { opacity: 1, duration: .3 }, 'share+=1.6')
-      .from('.reacts.s3 span', { scale: 0, stagger: .1, ease: 'back.out(3)', duration: .3 }, '<')
-      .to('.msg.s3', { opacity: 1, duration: .3 }, 'share+=2')
-      .from('.msg.s3', { y: 20, duration: .3 }, '<')
+    tl.to('#storyPhone .reacts.s3', { opacity: 1, duration: .3 }, 'share+=1.6')
+      .from('#storyPhone .reacts.s3 span', { scale: 0, stagger: .1, ease: 'back.out(3)', duration: .3 }, '<')
+      .to('#storyPhone .msg.s3', { opacity: 1, duration: .3 }, 'share+=2')
+      .from('#storyPhone .msg.s3', { y: 20, duration: .3 }, '<')
       .to({}, { duration: .5 });
     showStep(2)(tl, 'share+=.15');
 
@@ -857,7 +885,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
     const story = tl.scrollTrigger, ridden = ride && ride.scrollTrigger;
     const topOf = sel => document.querySelector(sel).getBoundingClientRect().top + scrollY;
     // one stop per beat of the story: the chat, its messages, the private ask, the app built, shared and voted
-    const shelfStep = stepScroll(() => [
+    const stepper = stepScroll(() => [
       { y: 0, fill: false },
       { y: story.start, fill: false, t: 0 },
       { y: story.labelToScroll('ask'), fill: false, t: tl.labels.ask },
@@ -868,15 +896,12 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 0 c
       { y: topOf('#soon') },
       { y: topOf('#faq') },
     ], () => ridden && scrollY >= ridden.start - 4 && scrollY <= ridden.end + 4 ? [ridden.start, ridden.end] : null);
-    if (ridden) {
-      // drag the cards with the mouse, or use the arrows
-      Observer.create({ target: '#track', type: 'pointer', dragMinimum: 8, tolerance: 30,
-        onLeft: () => shelfStep.side(1), onRight: () => shelfStep.side(-1) });
-      document.getElementById('shelfNext').addEventListener('click', () => shelfStep.side(1));
-      document.getElementById('shelfPrev').addEventListener('click', () => shelfStep.side(-1));
-    }
+    shelfStep = stepper;
+    // drag the cards with the mouse
+    const drag = Observer.create({ target: '#track', type: 'pointer', dragMinimum: 8, tolerance: 30,
+      onLeft: () => stepper.side(1), onRight: () => stepper.side(-1) });
 
-    return () => {};
+    return () => { stepper.kill(); drag.kill(); shelfStep = null; };
   });
 })();
 </script>
