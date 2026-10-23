@@ -72,12 +72,14 @@
 }
 .a11y-link svg { fill: currentColor; flex: none; }
 .a11y-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* phones: a round button with the icon alone; the words stay for screen readers */
+@media (max-width: 600px) { .a11y-link { width: 44px; padding: 0; justify-content: center; } .a11y-link span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 .skip { position: absolute; left: -9999px; top: calc(env(safe-area-inset-top, 0px) + 8px); z-index: 100; padding: 10px 14px; background: #fdd66c; color: #1c3055; font-weight: 800; border: 3px solid #1c3055; }
 .skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); }
 html.still *, html.still *::before, html.still *::after { animation-play-state: paused !important; }
 .top-actions { display: flex; align-items: center; gap: 10px; }
 /* the smallest phones: the llama head alone, the name stays for screen readers */
-@media (max-width: 480px) { .a11y-link { padding: 0 12px 0 10px; font-size: 14px; white-space: nowrap; } .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
+@media (max-width: 480px) { .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
