@@ -8,22 +8,24 @@
 <link rel="canonical" href="https://tandymessenger.com/">
 <link rel="icon" type="image/png" href="assets/iconB.png">
 <style>
-:root { --bg: #ffffff; --ink: #1c3055; --ink-2: #3d4f72; --link: #2a4fa0; --line: #c9d3e3; --panel: #f2f5fa; --focus: #b3261e; color-scheme: light; }
-@media (prefers-color-scheme: dark) { :root:not(.light) { --bg: #1b1932; --ink: #f7eed8; --ink-2: #d9cdf3; --link: #a9cdfe; --line: #4a4570; --panel: #262345; --focus: #fcb4b6; color-scheme: dark; } }
-:root.contrast { --bg: #000000; --ink: #ffffff; --ink-2: #ffffff; --link: #ffff00; --line: #ffffff; --panel: #000000; --focus: #ffff00; color-scheme: dark; }
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 300 900; font-display: swap; src: url(fonts/rubik.woff2) format("woff2"); }
+:root { --bg: #f5f9fc; --ink: #1c3055; --ink-2: #3d4f72; --link: #2a4fa0; --line: #c9d3e3; --focus: #1c3055; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #23203d; --ink: #f7eed8; --ink-2: #d9cdf3; --link: #a9cdfe; --line: #4a4570; --focus: #f7eed8; color-scheme: dark; } }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-a { color: var(--link); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-size: 1.125rem; font-family: "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+main { max-width: 70ch; margin-inline: auto; padding: 2rem max(1rem, env(safe-area-inset-right, 0px)) 4rem max(1rem, env(safe-area-inset-left, 0px)); }
+a { color: var(--link); text-underline-offset: 2px; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
-.skip { position: absolute; left: -9999px; } .skip:focus { left: 1rem; top: .5rem; background: var(--bg); padding: .5rem 1rem; z-index: 10; }
-main { max-width: 70ch; margin-inline: auto; padding: 1.5rem max(1rem, env(safe-area-inset-right, 0px)) 4rem max(1rem, env(safe-area-inset-left, 0px)); }
-h1 { font-size: 2rem; line-height: 1.2; margin: .5rem 0 1rem; }
-h2 { font-size: 1.4rem; line-height: 1.3; margin: 2rem 0 .5rem; }
-h3 { font-size: 1.15rem; margin: 1.2rem 0 .3rem; }
-.lead { font-size: 1.2rem; }
-.back { display: inline-block; margin-top: .5rem; }
-footer { border-top: 2px solid var(--line); margin-top: 3rem; padding-top: 1rem; }
-footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+.skip { position: absolute; left: -9999px; } .skip:focus { left: 1rem; top: .5rem; background: var(--bg); color: var(--ink); padding: .5rem 1rem; z-index: 10; }
+.back { display: inline-block; margin-bottom: 1.5rem; }
+h1 { font-size: clamp(1.9rem, 5vw, 2.5rem); line-height: 1.15; margin: 0 0 .75rem; letter-spacing: -.02em; }
+main h2 { font-size: 1.375rem; line-height: 1.3; margin: 2rem 0 .5rem; }
+main h3 { font-size: 1.15rem; margin: 1.2rem 0 .3rem; }
+.lead { font-size: 1.25rem; }
+.meta { color: var(--ink-2); margin: 0 0 1.5rem; }
+section + section { border-top: 2px solid var(--line); margin-top: 3rem; padding-top: 2rem; }
+main footer { border-top: 2px solid var(--line); margin-top: 3rem; padding-top: 1rem; }
+main footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
 
 :root { --scale: 1; --leading: 1.6; --t-bg: #ffffff; --t-ink: #1c3055; --t-panel: #f2f5fa; --t-line: #c9d3e3; }
 @media (prefers-color-scheme: dark) { :root { --t-bg: #1b1932; --t-ink: #f7eed8; --t-panel: #262345; --t-line: #4a4570; } }
@@ -47,6 +49,8 @@ body { line-height: var(--leading); }
 .tools :focus-visible { outline: 3px solid var(--t-ink); outline-offset: 3px; }
 .tools-panel { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
 .tools-panel[hidden] { display: none; }
+/* the status line is read aloud by screen readers ("Text size 115%"), not shown */
+.tools-status { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .tools button:not(.tools-toggle) { font: inherit; font-size: .95rem; min-height: 44px; padding: .3rem .8rem; color: var(--t-ink); background: var(--t-bg); border: 2px solid var(--t-ink); border-radius: .4rem; cursor: pointer; }
 .tools button[aria-pressed="true"] { background: var(--t-ink); color: var(--t-bg); }
 </style>
@@ -64,7 +68,7 @@ body { line-height: var(--leading); }
     <button type="button" data-toggle="links" aria-pressed="false">Highlight links</button>
     <button type="button" data-toggle="spacing" aria-pressed="false">Line spacing</button>
     <button type="button" id="t-reset">Reset</button>
-    <p id="tools-status" role="status" aria-live="polite" style="margin:0;flex-basis:100%;min-height:0"></p>
+    <p id="tools-status" class="tools-status" role="status" aria-live="polite"></p>
     </div>
   </div>
 </section>
