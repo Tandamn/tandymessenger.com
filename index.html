@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tandy Messenger · The AI group chat app that builds things | Coming soon</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Tandy Messenger is a group chat app with Tandy, an AI llama who makes polls, quizzes and games for your friends right in the chat. Coming soon to iPhone and Android.">
+<meta name="keywords" content="Tandy Messenger, Tandy, Tandy app, AI group chat, AI messenger, group chat app, AI chat app, group polls, group games, quiz app for friends, messenger app, Tandamn">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Tandamn!">
+<meta name="theme-color" content="#f5f9fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#23203d" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://tandymessenger.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tandy Messenger">
+<meta property="og:url" content="https://tandymessenger.com/">
+<meta property="og:title" content="Tandy Messenger · Group chats that build things">
+<meta property="og:description" content="Tandy, the AI llama in your group chat, makes polls, quizzes and games for everyone. Coming soon to iPhone and Android.">
+<meta property="og:image" content="https://tandymessenger.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Tandy Messenger logo and Tandy the pixel llama">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tandy Messenger · Group chats that build things">
+<meta name="twitter:description" content="The AI group chat app with a llama who builds. Coming soon to iPhone and Android.">
+<meta name="twitter:image" content="https://tandymessenger.com/assets/og.jpg">
+<meta name="apple-mobile-web-app-title" content="Tandy">
+<link rel="icon" type="image/png" href="assets/iconB.png">
+<link rel="apple-touch-icon" href="assets/iconB.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "MobileApplication", "@id": "https://tandymessenger.com/#app", "name": "Tandy Messenger", "alternateName": ["Tandy", "Tandy Messenger app"], "url": "https://tandymessenger.com/", "image": "https://tandymessenger.com/assets/og.jpg", "description": "Tandy Messenger is an AI group chat app. Tandy, the llama in your chat, makes polls, quizzes and games for your friends. Coming soon to iPhone and Android.", "applicationCategory": "SocialNetworkingApplication", "operatingSystem": "iOS, Android", "publisher": {"@id": "https://www.tandamn.com/#org"}, "creator": {"@id": "https://www.tandamn.com/#org"}}, {"@type": "Organization", "@id": "https://www.tandamn.com/#org", "name": "Tandamn!", "url": "https://www.tandamn.com/", "logo": "https://www.tandamn.com/assets/icon.png"}, {"@type": "WebSite", "@id": "https://tandymessenger.com/#site", "url": "https://tandymessenger.com/", "name": "Tandy Messenger", "publisher": {"@id": "https://www.tandamn.com/#org"}, "inLanguage": "en"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Tandy Messenger?", "acceptedAnswer": {"@type": "Answer", "text": "Tandy Messenger is a group chat app with Tandy, an AI llama who makes polls, quizzes, games and other little apps for your group, right inside the chat."}}, {"@type": "Question", "name": "When is Tandy Messenger coming out?", "acceptedAnswer": {"@type": "Answer", "text": "Soon. Tandy Messenger is on its way to the App Store and Google Play."}}, {"@type": "Question", "name": "Will Tandy Messenger be on iPhone and Android?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Tandy Messenger is coming to both iPhone and Android."}}, {"@type": "Question", "name": "Who sees what I ask Tandy?", "acceptedAnswer": {"@type": "Answer", "text": "Only you. What Tandy makes stays private until you choose to share it with the group."}}, {"@type": "Question", "name": "Who makes Tandy Messenger?", "acceptedAnswer": {"@type": "Answer", "text": "Tandy Messenger is made by Tandamn!, a small company that makes things worth a damn."}}]}]}</script>
+<link rel="preload" href="fonts/rubik.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* fonts are served from this site (no requests to Google, so visitors' IPs go to no third party) */
+@font-face { font-family: "Rubik"; font-style: normal; font-weight: 300 900; font-display: swap; src: url(fonts/rubik.woff2) format("woff2"); }
+@font-face { font-family: "Silkscreen"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/silkscreen-400.woff2) format("woff2"); }
+@font-face { font-family: "Silkscreen"; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/silkscreen-700.woff2) format("woff2"); }
+/* Layout: a product ad in four scenes — phones in the hero, one pinned phone telling the story, a sideways shelf of things Tandy makes, a llama saying "soon". */
+:root {
+  --bg: #f5f9fc;        /* pale sky */
+  --bg-2: #e3effc;      /* Tandy blue, soft */
+  --ink: #1c3055;       /* navy */
+  --ink-2: #4a5f86;
+  --brand: #79b1fe;     /* wordmark blue */
+  --action: #94bee8;
+  --butter: #fdd66c;
+  --pink: #fca2a5;
+  --mint: #bfe5d4;
+  --lav: #a688e2;
+  --phone: #1c3055;
+  --screen: #ffffff;
+  --bubble-in: #eef3f9;
+  --bubble-out: #d6e7fb;
+  --private: #efe7fd;
+  --private-ink: #5a3cb8;
+  --line: rgba(28, 48, 85, .12);
+  --shadow: rgba(28, 48, 85, .28);
+  --font-display: "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-pixel: "Silkscreen", ui-monospace, "Courier New", monospace;
+  --motion-bg: var(--bg); --motion-ink: var(--ink);
+  --c-maya: #a8394a; --c-ben: #2558a8; --c-noa: #5f3fb8;   /* friends' names, AA on the bubbles */
+}
+/* accessibility: skip link, pause motion */
+.skip { position: absolute; left: -9999px; top: calc(env(safe-area-inset-top, 0px) + 8px); z-index: 100; padding: 10px 14px; background: #fdd66c; color: #1c3055; font-weight: 800; border: 3px solid #1c3055; }
+.skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); }
+.motion {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; cursor: pointer;
+  font-family: var(--font-pixel); font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+  background: var(--motion-bg); color: var(--motion-ink); border: 3px solid var(--motion-ink); box-shadow: 3px 3px 0 var(--motion-ink);
+}
+.motion i { width: 10px; height: 12px; border-inline: 3px solid currentColor; }
+.motion[aria-pressed="true"] i { border: 0; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 10px solid currentColor; }
+html.still *, html.still *::before, html.still *::after { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) { .motion { display: none; } }
+.top-actions { display: flex; align-items: center; gap: 10px; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #23203d; --bg-2: #2d2950; --ink: #f7eed8; --ink-2: #c9b3f0; --brand: #f7eed8; --action: #bfe5d4;
+    --butter: #fdd66c; --pink: #f2b0c4; --mint: #bfe5d4; --lav: #a688e2;
+    --phone: #0f0d22; --screen: #1b1932; --bubble-in: #2d2950; --bubble-out: #34555a;
+    --private: #3a2f6a; --private-ink: #d9c8ff; --line: rgba(247, 238, 216, .12); --shadow: rgba(0, 0, 0, .55);
+    --c-maya: #fcb4b6; --c-ben: #a9cdfe; --c-noa: #d6c5f7;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #23203d; --bg-2: #2d2950; --ink: #f7eed8; --ink-2: #c9b3f0; --brand: #f7eed8; --action: #bfe5d4;
+  --butter: #fdd66c; --pink: #f2b0c4; --mint: #bfe5d4; --lav: #a688e2;
+  --phone: #0f0d22; --screen: #1b1932; --bubble-in: #2d2950; --bubble-out: #34555a;
+  --private: #3a2f6a; --private-ink: #d9c8ff; --line: rgba(247, 238, 216, .12); --shadow: rgba(0, 0, 0, .55);
+  --c-maya: #fcb4b6; --c-ben: #a9cdfe; --c-noa: #d6c5f7;
+  color-scheme: dark;
+}
+/* which artwork shows in which look */
+.for-dark { display: none !important; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .for-dark { display: block !important; }
+  :root:not([data-theme="light"]) .for-light { display: none !important; }
+}
+:root[data-theme="dark"] .for-dark { display: block !important; }
+:root[data-theme="dark"] .for-light { display: none !important; }
+
+* { box-sizing: border-box; }
+html { overflow-x: clip; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-display); font-size: 18px; line-height: 1.5;
+  overflow-x: clip; -webkit-font-smoothing: antialiased;
+  transition: background-color .01s;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px dashed var(--lav); outline-offset: 4px; }
+.wrap {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.pixel { font-family: var(--font-pixel); letter-spacing: .08em; text-transform: uppercase; }
+
+#ambient, #fx, #wipe { position: fixed; inset: 0; width: 100vw; height: 100lvh; pointer-events: none; image-rendering: pixelated; }
+#ambient { z-index: 0; }
+#fx { z-index: 60; }
+#wipe { z-index: 80; image-rendering: auto; }
+
+/* header */
+.top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 12px); padding-bottom: 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.brandmark { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 13px; }
+.brandmark img { width: 30px; height: 30px; object-fit: contain; image-rendering: pixelated; }
+.theme {
+  width: 44px; height: 44px; border: 3px solid var(--ink); background: var(--bg);
+  box-shadow: 3px 3px 0 var(--ink); cursor: pointer; display: grid; place-items: center; padding: 0;
+}
+.theme:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.theme i { width: 20px; height: 20px; background: var(--ink); }
+/* light shows a pixel moon (go dark), dark shows a pixel sun (go light) */
+.theme .moon { clip-path: polygon(25% 0, 70% 0, 70% 15%, 45% 15%, 45% 30%, 35% 30%, 35% 70%, 45% 70%, 45% 85%, 70% 85%, 70% 100%, 25% 100%, 25% 85%, 10% 85%, 10% 70%, 0 70%, 0 30%, 10% 30%, 10% 15%, 25% 15%); }
+.theme .sun { background: var(--butter); clip-path: polygon(35% 0, 65% 0, 65% 20%, 80% 20%, 80% 35%, 100% 35%, 100% 65%, 80% 65%, 80% 80%, 65% 80%, 65% 100%, 35% 100%, 35% 80%, 20% 80%, 20% 65%, 0 65%, 0 35%, 20% 35%, 20% 20%, 35% 20%); }
+
+main { position: relative; z-index: 10; }
+
+/* 1 · hero */
+.hero {
+  min-height: 100svh; display: grid; align-items: center; gap: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  padding-block: calc(env(safe-area-inset-top, 0px) + 96px) 64px;
+  max-width: 1240px; margin-inline: auto;
+}
+.hero-copy { display: grid; gap: 22px; justify-items: start; min-width: 0; }
+.wordmark { width: min(460px, 100%); }
+.sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.kicker { margin: 0 0 -10px; font-size: 13px; color: var(--ink-2); }
+.hero h1 {
+  margin: 0; font-weight: 900; letter-spacing: -.035em; line-height: .98;
+  font-size: clamp(42px, 6.2vw, 84px); text-wrap: balance;
+}
+.hero h1 em { font-style: normal; color: var(--brand); -webkit-text-stroke: 0; }
+.lede { margin: 0; max-width: 36ch; font-size: clamp(18px, 1.7vw, 21px); color: var(--ink-2); text-wrap: pretty; }
+.stores { display: flex; flex-wrap: wrap; gap: 12px; }
+.store {
+  display: inline-grid; gap: 0; padding: 10px 16px 9px; min-width: 156px;
+  border: 3px solid var(--ink); background: var(--bg); box-shadow: 4px 4px 0 var(--ink);
+}
+.store small { font-family: var(--font-pixel); font-size: 12px; letter-spacing: .1em; color: var(--ink-2); }
+.store b { font-size: 18px; font-weight: 800; line-height: 1.2; }
+
+.phones { position: relative; height: min(640px, 78svh); min-width: 0; perspective: 1400px; }
+.phones .phone { position: absolute; top: 50%; left: 50%; --w: clamp(170px, 19vw, 250px); }
+.phones .p1 { transform: translate(-112%, -46%) rotate(-9deg); }
+.phones .p2 { transform: translate(-50%, -52%); z-index: 2; }
+.phones .p3 { transform: translate(12%, -46%) rotate(9deg); }
+
+/* a phone */
+.phone {
+  width: var(--w, 260px); aspect-ratio: 9 / 19.2; max-width: 100%;
+  border-radius: calc(var(--w, 260px) * .16); background: var(--phone); padding: calc(var(--w, 260px) * .04);
+  box-shadow: 0 40px 60px -28px var(--shadow), inset 0 0 0 2px rgba(255, 255, 255, .08);
+}
+.screen {
+  position: relative; height: 100%; overflow: hidden; border-radius: calc(var(--w, 260px) * .125);
+  background: var(--screen); display: flex; flex-direction: column;
+  font-size: calc(var(--w, 260px) * .05); line-height: 1.3;
+}
+.island { position: absolute; top: 2.2%; left: 50%; width: 30%; height: 3.2%; border-radius: 99px; background: var(--phone); transform: translateX(-50%); z-index: 5; }
+.chat-head { display: flex; align-items: center; gap: .6em; padding: 3.4em 1em .8em; border-bottom: 1px solid var(--line); }
+.chat-head .av { display: flex; }
+.chat-head .av b { width: 1.8em; height: 1.8em; border-radius: 50%; border: 2px solid var(--screen); margin-left: -.55em; }
+.chat-head .av b:first-child { margin-left: 0; }
+.chat-head strong { font-size: 1.05em; }
+.chat-head span { display: block; font-size: .78em; color: var(--ink-2); }
+.msgs { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: .45em; padding: .8em .8em .4em; min-height: 0; }
+.msg { max-width: 80%; padding: .45em .75em; border-radius: 1.1em; background: var(--bubble-in); align-self: flex-start; }
+.msg .who { display: block; font-size: .72em; font-weight: 700; }
+.msg.out { align-self: flex-end; background: var(--bubble-out); }
+.composer { display: flex; align-items: center; gap: .5em; padding: .5em .8em 1.6em; }
+.composer .field { flex: 1; height: 2.4em; border-radius: 99px; background: var(--bubble-in); display: flex; align-items: center; padding-inline: .9em; color: var(--ink-2); font-size: .9em; }
+.composer .dock { width: 2.6em; height: 2.6em; border-radius: 50%; background: var(--bg-2); display: grid; place-items: center; }
+.composer .dock img { width: 72%; height: 72%; object-fit: contain; image-rendering: pixelated; }
+.c-maya { color: var(--c-maya); } .c-ben { color: var(--c-ben); } .c-noa { color: var(--c-noa); }
+.b-maya { background: #fca2a5; } .b-ben { background: #79b1fe; } .b-noa { background: #a688e2; } .b-you { background: #fdd66c; }
+
+/* mini apps inside phones */
+.card {
+  background: var(--screen); border: 2px solid var(--ink); border-radius: 1em; padding: .8em; display: grid; gap: .5em;
+  box-shadow: .25em .25em 0 var(--ink); align-self: stretch; margin-inline: .2em;
+}
+.card h4 { margin: 0; font-size: 1em; display: flex; justify-content: space-between; align-items: center; }
+.card h4 small { font-family: var(--font-pixel); font-size: .6em; color: var(--ink-2); font-weight: 400; }
+.opt { position: relative; border-radius: .6em; background: var(--bubble-in); padding: .4em .6em; display: flex; justify-content: space-between; overflow: hidden; font-size: .9em; }
+.opt i { position: absolute; inset: 0 auto 0 0; width: var(--v, 0%); background: var(--mint); opacity: .8; }
+.opt span, .opt b { position: relative; }
+.wheel { width: 78%; aspect-ratio: 1; margin: 1.2em auto .6em; border-radius: 50%; border: 3px solid var(--ink);
+  background: conic-gradient(#fca2a5 0 60deg, #fdd66c 0 120deg, #bfe5d4 0 180deg, #79b1fe 0 240deg, #a688e2 0 300deg, #f0e7c7 0); }
+.pin { width: 0; height: 0; margin: 0 auto -1.4em; border-left: .7em solid transparent; border-right: .7em solid transparent; border-top: 1.2em solid var(--ink); position: relative; z-index: 2; }
+.quiz-q { font-weight: 700; font-size: 1.05em; text-align: center; padding: 3.4em .8em .4em; }
+.quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5em; padding: .6em .8em; }
+.quiz-grid span { border-radius: .7em; padding: 1.1em .4em; text-align: center; font-weight: 700; color: #1c3055; }
+
+/* 2 · the story (pinned) */
+.story { height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 48px; max-width: 1100px; margin-inline: auto; }
+.steps { position: relative; display: grid; gap: 28px; min-width: 0; }
+.steps .eyebrow { color: var(--ink-2); font-size: 13px; margin: 0; }
+.step { opacity: .22; }
+.step h3 { margin: 0 0 4px; font-size: clamp(26px, 3.4vw, 42px); font-weight: 900; letter-spacing: -.025em; line-height: 1.05; }
+.step p { margin: 0; color: var(--ink-2); max-width: 30ch; }
+.step .n { font-family: var(--font-pixel); font-size: 13px; color: var(--lav); }
+.story .phone { --w: min(320px, calc(68svh / 2.13)); }
+.private {
+  position: absolute; inset: 0; z-index: 4; background: var(--private); color: var(--private-ink);
+  display: flex; flex-direction: column; padding: 3.6em .8em 1.4em; gap: .6em;
+  transform: translateY(102%);
+}
+.private .banner { align-self: center; font-family: var(--font-pixel); font-size: .62em; padding: .5em .9em; border-radius: 99px; background: var(--screen); color: var(--private-ink); }
+.private .msg.out { background: var(--lav); color: #fff; }
+.private .tandy { display: flex; gap: .5em; align-items: flex-end; }
+.private .tandy img { width: 2.2em; height: 2.2em; border-radius: 50%; background: var(--bg-2); object-fit: contain; padding: .15em; image-rendering: pixelated; }
+.private .tandy .msg { background: var(--screen); color: var(--ink); }
+.typing { display: inline-flex; gap: .25em; padding: .7em .8em; }
+.typing i { width: .4em; height: .4em; background: var(--private-ink); }
+.build { position: relative; flex: 1; display: grid; align-content: start; }
+.build .card { color: var(--ink); }
+.bits { position: absolute; inset: 0; pointer-events: none; }
+.bits b { position: absolute; width: 12.5%; height: 20%; }
+.share {
+  align-self: center; border: 2px solid var(--ink); background: var(--butter); color: #1c3055; font-weight: 800;
+  border-radius: 99px; padding: .5em 1.4em; box-shadow: .2em .2em 0 var(--ink); font-size: .95em;
+}
+.reacts { display: flex; gap: .3em; align-self: flex-start; margin-top: -.3em; }
+.reacts span { background: var(--screen); border: 1px solid var(--line); border-radius: 99px; padding: .1em .5em; font-size: .85em; }
+
+/* 3 · the shelf */
+.shelf { height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; gap: 36px; overflow: hidden; }
+.shelf h2 { margin: 0; font-size: clamp(34px, 5vw, 64px); font-weight: 900; letter-spacing: -.03em; line-height: 1; text-wrap: balance; }
+.shelf .sub { margin: 0; color: var(--ink-2); max-width: 40ch; }
+.shelf-head { display: grid; gap: 10px; max-width: 1240px; width: 100%; margin-inline: auto; }
+.track { display: flex; gap: 22px; width: max-content; padding-block: 16px 28px; }
+.tile {
+  width: clamp(200px, 22vw, 260px); aspect-ratio: 4 / 5; flex: none;
+  border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); border-radius: 22px;
+  display: grid; align-content: space-between; padding: 22px; color: #1c3055;
+}
+.tile .em { font-size: clamp(54px, 6vw, 72px); line-height: 1; }
+.tile b { font-size: clamp(22px, 2.2vw, 28px); font-weight: 900; letter-spacing: -.02em; line-height: 1.05; }
+.tile small { display: block; font-family: var(--font-pixel); font-size: 12px; letter-spacing: .06em; margin-top: 6px; }
+.tile.wild { background: var(--bg); color: var(--ink); border-style: dashed; }
+
+/* 4 · soon */
+.soon { min-height: 100svh; display: grid; place-items: center; align-content: center; gap: 22px; text-align: center; padding-block: 96px 64px; }
+.soon .llama { width: clamp(120px, 16vw, 190px); cursor: pointer; border: 0; background: none; padding: 0; position: relative; }
+.soon .llama img { width: 100%; image-rendering: pixelated; }
+.say {
+  font-family: var(--font-pixel); font-size: 13px; background: var(--screen); color: var(--ink); border: 3px solid var(--ink);
+  padding: 10px 14px; box-shadow: 4px 4px 0 var(--ink); position: relative;
+}
+.say::after { content: ""; position: absolute; left: 50%; bottom: -12px; width: 12px; height: 12px; background: var(--ink); clip-path: polygon(0 0, 100% 0, 0 100%); }
+.soon h2 { margin: 0; font-size: clamp(48px, 9vw, 120px); font-weight: 900; letter-spacing: -.04em; line-height: .95; }
+.soon h2 span { color: var(--pink); }
+.soon p { margin: 0; color: var(--ink-2); max-width: 34ch; }
+.soon .stores { justify-content: center; }
+.maker { font-family: var(--font-pixel); font-size: 12px; text-decoration: none; border-bottom: 2px solid var(--lav); padding-bottom: 2px; }
+.faq { padding-block: 24px 96px; }
+.faq-in { max-width: 760px; margin-inline: auto; display: grid; gap: 12px; }
+.faq h2 { margin: 0 0 8px; font-size: clamp(30px, 4vw, 44px); font-weight: 900; letter-spacing: -.03em; }
+.qa { border: 3px solid var(--ink); background: var(--screen); box-shadow: 4px 4px 0 var(--ink); }
+.qa summary { cursor: pointer; padding: 16px 18px; font-weight: 800; font-size: 19px; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: "+"; font-family: var(--font-pixel); color: var(--lav); }
+.qa[open] summary::after { content: "–"; }
+.qa p { margin: 0; padding: 0 18px 18px; color: var(--ink-2); }
+footer { position: relative; z-index: 10; text-align: center; padding-block: 0 calc(28px + env(safe-area-inset-bottom, 0px)); font-family: var(--font-pixel); font-size: 12px; color: var(--ink-2); }
+
+@media (max-width: 860px) {
+  body { font-size: 16px; }
+  .hero { grid-template-columns: minmax(0, 1fr); text-align: left; padding-block: calc(env(safe-area-inset-top, 0px) + 84px) 24px; }
+  .phones { height: 400px; }
+  .phones .phone { --w: 158px; }
+  .story { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: start; gap: 12px; padding-block: calc(env(safe-area-inset-top, 0px) + 72px) 16px; }
+  .steps { min-height: 118px; gap: 0; }
+  .steps .eyebrow { display: none; }
+  .step { position: absolute; inset: 0 0 auto 0; opacity: 0; }
+  .step:first-of-type { opacity: 1; }
+  .step h3 { font-size: 28px; }
+  .step p { font-size: 15px; }
+  .story .phone { --w: min(260px, calc((100svh - 230px) / 2.13)); justify-self: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .step { opacity: 1; position: static; }
+  .shelf { height: auto; padding-block: 80px; }
+  .track { flex-wrap: wrap; width: auto; max-width: 1240px; margin-inline: auto; }
+}
+</style>
+</head>
+<body>
+<canvas id="ambient" aria-hidden="true"></canvas>
+<canvas id="fx" aria-hidden="true"></canvas>
+<canvas id="wipe" aria-hidden="true"></canvas>
+
+<a class="skip" href="#top">Skip to content</a>
+<header class="top wrap">
+  <a class="brandmark pixel" href="#top">
+    <img class="for-light" src="assets/llamaHeadB.png" alt="">
+    <img class="for-dark" src="assets/llamaHead.png" alt="">
+    Tandy Messenger
+  </a>
+  <div class="top-actions">
+    <button class="motion" id="motion" type="button" aria-pressed="false"><i aria-hidden="true"></i><span>Pause motion</span></button>
+    <button class="theme" id="theme" type="button" aria-label="Switch between light and dark"><i class="moon for-light"></i><i class="sun for-dark"></i></button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- 1 · hero -->
+  <section class="hero wrap">
+    <div class="hero-copy">
+      <img class="wordmark for-light" src="assets/tandy-wordmark-light.webp" alt="Tandy Messenger logo" width="1908" height="824">
+      <img class="wordmark for-dark" src="assets/tandy-wordmark-dark.webp" alt="Tandy Messenger logo" width="1908" height="824">
+      <p class="kicker pixel">The AI group chat app</p>
+      <h1><span class="sr">Tandy Messenger: </span>Group chats that <em>build things.</em></h1>
+      <p class="lede">Tandy is the AI llama in your group chat. Ask him for a vote, a quiz or a game, and it pops up for everyone, ready to play.</p>
+      <div class="stores">
+        <span class="store" aria-label="App Store, coming soon"><small>SOON ON THE</small><b>App Store</b></span>
+        <span class="store" aria-label="Google Play, coming soon"><small>SOON ON</small><b>Google Play</b></span>
+      </div>
+    </div>
+
+    <div class="phones" id="phones" aria-hidden="true">
+      <div class="phone p1"><div class="screen">
+        <div class="island"></div>
+        <div class="quiz-q">Who said “I'll be 5 min late” and was 40?</div>
+        <div class="quiz-grid">
+          <span style="background:#fca2a5">Maya</span><span style="background:#79b1fe">Ben</span>
+          <span style="background:#a688e2">Noa</span><span style="background:#fdd66c">You 🙈</span>
+        </div>
+        <div class="msgs"><div class="msg"><span class="who c-ben">Ben</span>this quiz is a personal attack</div></div>
+        <div class="composer"><div class="field">Message</div></div>
+      </div></div>
+
+      <div class="phone p2"><div class="screen">
+        <div class="island"></div>
+        <div class="chat-head"><div class="av"><b class="b-maya"></b><b class="b-ben"></b><b class="b-noa"></b></div><div><strong>Friday crew</strong><span>4 friends and Tandy</span></div></div>
+        <div class="msgs">
+          <div class="msg"><span class="who c-maya">Maya</span>Friday. Who's in? 🍕</div>
+          <div class="msg out">me!! but what are we doing</div>
+          <div class="card"><h4>Friday plan <small>VOTE</small></h4>
+            <div class="opt" style="--v:72%"><i></i><span>Pizza night</span><b>3</b></div>
+            <div class="opt" style="--v:24%"><i></i><span>Bowling</span><b>1</b></div>
+          </div>
+        </div>
+        <div class="composer"><div class="field">Message</div><div class="dock"><img class="for-light" src="assets/llamaHeadB.png" alt=""><img class="for-dark" src="assets/llamaHead.png" alt=""></div></div>
+      </div></div>
+
+      <div class="phone p3"><div class="screen">
+        <div class="island"></div>
+        <div class="quiz-q">Who picks the movie?</div>
+        <div class="pin"></div>
+        <div class="wheel" id="heroWheel"></div>
+        <div class="msgs"><div class="msg"><span class="who c-noa">Noa</span>spin it again 😤</div></div>
+        <div class="composer"><div class="field">Message</div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 2 · how it works (pinned) -->
+  <section class="story wrap" id="story">
+    <div class="steps">
+      <p class="eyebrow pixel">How it works</p>
+      <div class="step"><span class="n">1 of 3</span><h3>Chat like always.</h3><p>Your friends, your plans, your inside jokes.</p></div>
+      <div class="step"><span class="n">2 of 3</span><h3>Ask Tandy. Just you two.</h3><p>Only you see what he makes until you share it.</p></div>
+      <div class="step"><span class="n">3 of 3</span><h3>Share it. Play together.</h3><p>Everyone taps, votes and plays right in the chat.</p></div>
+    </div>
+
+    <div class="phone" id="storyPhone" aria-hidden="true"><div class="screen">
+      <div class="island"></div>
+      <div class="chat-head"><div class="av"><b class="b-maya"></b><b class="b-ben"></b><b class="b-noa"></b></div><div><strong>Friday crew</strong><span>4 friends and Tandy</span></div></div>
+      <div class="msgs">
+        <div class="msg s1"><span class="who c-maya">Maya</span>Friday night. Who's in? 🍕</div>
+        <div class="msg s1"><span class="who c-ben">Ben</span>me!!</div>
+        <div class="msg s1"><span class="who c-noa">Noa</span>in, but what are we doing</div>
+        <div class="card s3" id="sharedCard"><h4>Friday plan <small>VOTE</small></h4>
+          <div class="opt" data-v="60"><i></i><span>Pizza night</span><b>3</b></div>
+          <div class="opt" data-v="20"><i></i><span>Bowling</span><b>1</b></div>
+          <div class="opt" data-v="40"><i></i><span>Movie marathon</span><b>2</b></div>
+        </div>
+        <div class="reacts s3"><span>🎉 3</span><span>🔥 2</span></div>
+        <div class="msg s3"><span class="who c-ben">Ben</span>pizza wins. obviously.</div>
+      </div>
+      <div class="composer"><div class="field">Message</div><div class="dock" id="dock"><img class="for-light" src="assets/llamaHeadB.png" alt=""><img class="for-dark" src="assets/llamaHead.png" alt=""></div></div>
+
+      <div class="private" id="private">
+        <span class="banner">JUST YOU AND TANDY</span>
+        <div class="msg out p1">Tandy, make us a vote for Friday</div>
+        <div class="tandy p2"><img class="for-light" src="assets/llamaHeadB.png" alt=""><img class="for-dark" src="assets/llamaHead.png" alt="">
+          <div class="msg typing" id="typing"><i></i><i></i><i></i></div>
+          <div class="msg" id="tandyReply" hidden>Here's one. Want to share it?</div>
+        </div>
+        <div class="build">
+          <div class="card" id="buildCard"><h4>Friday plan <small>VOTE</small></h4>
+            <div class="opt"><i></i><span>Pizza night</span><b>0</b></div>
+            <div class="opt"><i></i><span>Bowling</span><b>0</b></div>
+            <div class="opt"><i></i><span>Movie marathon</span><b>0</b></div>
+          </div>
+          <div class="bits" id="bits"></div>
+        </div>
+        <span class="share" id="share">Share with the group</span>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 3 · the shelf -->
+  <section class="shelf" id="shelf">
+    <div class="shelf-head wrap">
+      <p class="pixel" style="margin:0;font-size:13px;color:var(--ink-2)">Tandy can whip up</p>
+      <h2>Ask for anything fun.</h2>
+      <p class="sub">A few things friends make with Tandy. Or describe something new and watch it appear.</p>
+    </div>
+    <div class="wrap">
+      <div class="track" id="track">
+        <div class="tile" style="background:#fca2a5"><span class="em" aria-hidden="true">🗳️</span><div><b>Votes</b><small>DINNER? DATES? SETTLED.</small></div></div>
+        <div class="tile" style="background:#fdd66c"><span class="em" aria-hidden="true">🧠</span><div><b>Quizzes</b><small>HOW WELL DO YOU KNOW US</small></div></div>
+        <div class="tile" style="background:#bfe5d4"><span class="em" aria-hidden="true">🎡</span><div><b>Spin the wheel</b><small>LET FATE PICK THE MOVIE</small></div></div>
+        <div class="tile" style="background:#79b1fe"><span class="em" aria-hidden="true">🙋</span><div><b>Who's in?</b><small>NO MORE COUNTING HANDS</small></div></div>
+        <div class="tile" style="background:#a688e2"><span class="em" aria-hidden="true">🤔</span><div><b>Would you rather</b><small>CHAOS, BUT FRIENDLY</small></div></div>
+        <div class="tile" style="background:#f0e7c7"><span class="em" aria-hidden="true">🧾</span><div><b>Split the bill</b><small>WHO OWES WHO, SOLVED</small></div></div>
+        <div class="tile" style="background:#fca2a5"><span class="em" aria-hidden="true">🎯</span><div><b>Bingo</b><small>FOR THE FAMILY DINNER</small></div></div>
+        <div class="tile" style="background:#fdd66c"><span class="em" aria-hidden="true">⏳</span><div><b>Countdowns</b><small>12 DAYS TO THE TRIP</small></div></div>
+        <div class="tile wild"><span class="em" aria-hidden="true">✨</span><div><b>Your idea here</b><small>DESCRIBE IT. TANDY BUILDS IT.</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · soon -->
+  <section class="soon wrap" id="soon">
+    <span class="say" id="say">SEE YOU IN THE APP STORES!</span>
+    <button class="llama" id="llama" type="button" aria-label="Tandy the llama. Tap to make him hop.">
+      <img class="for-light" src="assets/llamaB.png" alt="Tandy the llama" width="175" height="262">
+      <img class="for-dark" src="assets/llama.png" alt="Tandy the llama" width="222" height="358">
+    </button>
+    <h2>Coming <span>soon.</span></h2>
+    <p>Tandy Messenger lands on iPhone and Android soon. Bring your group.</p>
+    <div class="stores">
+      <span class="store" aria-label="App Store, coming soon"><small>SOON ON THE</small><b>App Store</b></span>
+      <span class="store" aria-label="Google Play, coming soon"><small>SOON ON</small><b>Google Play</b></span>
+    </div>
+    <a class="maker" href="https://www.tandamn.com/">MADE WITH ❤️ BY TANDAMN!</a>
+  </section>
+  <section class="faq wrap" id="faq" aria-labelledby="faq-title">
+    <div class="faq-in">
+      <h2 id="faq-title">Questions, answered</h2>
+      <details class="qa"><summary>What is Tandy Messenger?</summary><p>Tandy Messenger is a group chat app with Tandy, an AI llama who makes polls, quizzes, games and other little apps for your group, right inside the chat.</p></details>
+      <details class="qa"><summary>When is Tandy Messenger coming out?</summary><p>Soon. Tandy Messenger is on its way to the App Store and Google Play.</p></details>
+      <details class="qa"><summary>Will Tandy Messenger be on iPhone and Android?</summary><p>Yes. Tandy Messenger is coming to both iPhone and Android.</p></details>
+      <details class="qa"><summary>Who sees what I ask Tandy?</summary><p>Only you. What Tandy makes stays private until you choose to share it with the group.</p></details>
+      <details class="qa"><summary>Who makes Tandy Messenger?</summary><p>Tandy Messenger is made by Tandamn!, a small company that makes things worth a damn.</p></details>
+    </div>
+  </section>
+</main>
+<footer class="wrap">MADE WITH ❤️ BY <a href="https://www.tandamn.com/">TANDAMN!</a> · © 2026 · TANDY MESSENGER, THE AI GROUP CHAT APP · <a href="accessibility.html">ACCESSIBILITY</a> · <a href="privacy.html">PRIVACY</a></footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/Observer.min.js"></script>
+<script src="vendor/ScrollToPlugin.min.js"></script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = matchMedia('(pointer: fine)').matches;
+  const darkMQ = matchMedia('(prefers-color-scheme: dark)');
+  const root = document.documentElement;
+
+  // ---------- pause motion (WCAG 2.2.2: anything that moves by itself for over 5 seconds can be stopped) ----------
+  const ambient = [], loop = t => (ambient.push(t), t);
+  let still = false, stillAt = 0;
+  const motionBtn = document.getElementById('motion');
+  motionBtn.addEventListener('click', () => {
+    still = !still;
+    root.classList.toggle('still', still);
+    ambient.forEach(t => still ? t.pause() : t.resume());
+    motionBtn.setAttribute('aria-pressed', String(still));
+    motionBtn.querySelector('span').textContent = still ? 'Play motion' : 'Pause motion';
+  });
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : darkMQ.matches;
+  const css = name => getComputedStyle(root).getPropertyValue(name).trim();
+
+  // ---------- ambient pixels + sparkles ----------
+  const amb = document.getElementById('ambient'), a = amb.getContext('2d');
+  const fx = document.getElementById('fx'), f = fx.getContext('2d');
+  let W, H, PX = 5, motes = [], stars = [], bits = [];
+  const COLORS = ['#f2b0c4', '#bfe5d4', '#fdd66c', '#a688e2', '#79b1fe'];
+  function size() {
+    PX = innerWidth < 600 ? 4 : 5;
+    W = Math.ceil(innerWidth / PX); H = Math.ceil(innerHeight / PX);
+    amb.width = fx.width = W; amb.height = fx.height = H;
+    motes = Array.from({ length: Math.round(W * H / 900) }, () => ({ x: rand(0, W), y: rand(0, H), v: rand(.03, .12), c: COLORS[(Math.random() * 5) | 0], s: Math.random() < .2 ? 2 : 1, ph: rand(0, 6.28) }));
+    stars = Array.from({ length: Math.round(W * H / 300) }, () => ({ x: rand(0, W) | 0, y: rand(0, H) | 0, ph: rand(0, 6.28), sp: rand(.5, 2) }));
+  }
+  function burst(cx, cy, n = 18, spread = 1) {
+    for (let i = 0; i < n; i++) bits.push({ x: cx, y: cy, vx: rand(-1, 1) * spread, vy: rand(-1.6, -.2) * spread, life: rand(30, 60), c: COLORS[i % COLORS.length] });
+  }
+  if (finePointer && !reduce) {
+    let last = 0;
+    addEventListener('pointermove', e => {
+      const now = performance.now(); if (now - last < 30) return; last = now;
+      bits.push({ x: e.clientX / PX, y: e.clientY / PX, vx: rand(-.15, .15), vy: rand(-.1, .25), life: 34, c: COLORS[(Math.random() * 5) | 0] });
+    }, { passive: true });
+  }
+  addEventListener('pointerdown', e => { if (!reduce) burst(e.clientX / PX, e.clientY / PX, 10, .7); }, { passive: true });
+
+  function frame(t) {
+    if (still) t = stillAt; else stillAt = t;
+    a.clearRect(0, 0, W, H);
+    const dark = isDark();
+    if (dark) for (const s of stars) {
+      a.globalAlpha = .15 + .55 * Math.sin(t * s.sp + s.ph) ** 2; a.fillStyle = '#f7eed8'; a.fillRect(s.x, s.y, 1, 1);
+    }
+    for (const m of motes) {
+      if (!reduce && !still) { m.y -= m.v; if (m.y < -2) { m.y = H + 2; m.x = rand(0, W); } }
+      a.globalAlpha = (dark ? .55 : .45) * (.5 + .5 * Math.sin(t + m.ph));
+      a.fillStyle = m.c; a.fillRect(Math.round(m.x + Math.sin(t * .6 + m.ph) * 2), Math.round(m.y), m.s, m.s);
+    }
+    a.globalAlpha = 1;
+    f.clearRect(0, 0, W, H);
+    bits = bits.filter(b => (b.life -= 1) > 0);
+    for (const b of bits) { b.x += b.vx; b.y += b.vy; b.vy += .05; f.globalAlpha = Math.min(1, b.life / 20); f.fillStyle = b.c; f.fillRect(Math.round(b.x), Math.round(b.y), 1, 1); }
+    f.globalAlpha = 1;
+  }
+  size(); addEventListener('resize', size);
+  gsap.ticker.add(frame);
+
+  // ---------- light ⇄ dark with a pixel dissolve ----------
+  const wipe = document.getElementById('wipe'), w = wipe.getContext('2d');
+  const themeBtn = document.getElementById('theme');
+  function setTheme(next) {
+    root.dataset.theme = next;
+  }
+  themeBtn.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    if (reduce) { setTheme(next); return; }
+    const B = innerWidth < 600 ? 22 : 34;
+    wipe.width = innerWidth; wipe.height = innerHeight;
+    const cols = Math.ceil(innerWidth / B), rows = Math.ceil(innerHeight / B);
+    const cells = gsap.utils.shuffle(Array.from({ length: cols * rows }, (_, i) => i));
+    const color = next === 'dark' ? '#23203d' : '#f5f9fc';
+    const st = { p: 0 };
+    let drawn = 0;
+    const r = themeBtn.getBoundingClientRect(); burst((r.left + r.width / 2) / PX, (r.top + r.height / 2) / PX, 24, 1.2);
+    gsap.timeline()
+      .to(st, { p: 1, duration: .38, ease: 'power1.in', onUpdate() {
+        const upto = Math.floor(st.p * cells.length); w.fillStyle = color;
+        for (; drawn < upto; drawn++) { const c = cells[drawn]; w.fillRect((c % cols) * B, Math.floor(c / cols) * B, B, B); }
+      }, onComplete() { w.fillRect(0, 0, innerWidth, innerHeight); setTheme(next); drawn = 0; } })
+      .to(st, { p: 0, duration: .42, ease: 'power1.out', onUpdate() {
+        const upto = Math.floor((1 - st.p) * cells.length);
+        for (; drawn < upto; drawn++) { const c = cells[drawn]; w.clearRect((c % cols) * B, Math.floor(c / cols) * B, B, B); }
+      }, onComplete() { w.clearRect(0, 0, innerWidth, innerHeight); } }, '+=.05');
+  });
+
+  // ---------- the llama ----------
+  const llama = document.getElementById('llama');
+  llama.addEventListener('click', () => {
+    if (reduce) return;
+    gsap.timeline()
+      .to(llama, { y: -46, scaleY: 1.06, duration: .22, ease: 'power2.out' })
+      .to(llama, { y: 0, scaleY: .92, duration: .2, ease: 'power2.in' })
+      .to(llama, { scaleY: 1, duration: .25, ease: 'elastic.out(1, .4)' });
+    const r = llama.getBoundingClientRect(); burst((r.left + r.width / 2) / PX, r.top / PX, 26, 1.2);
+  });
+
+  // ---------- the pixel bits that assemble the mini app ----------
+  const bitsBox = document.getElementById('bits');
+  const BIT_COLORS = ['#79b1fe', '#fdd66c', '#fca2a5', '#bfe5d4', '#a688e2'];
+  for (let i = 0; i < 40; i++) {
+    const b = document.createElement('b');
+    b.style.left = (i % 8) * 12.5 + '%'; b.style.top = Math.floor(i / 8) * 20 + '%';
+    b.style.background = BIT_COLORS[i % 5];
+    bitsBox.append(b);
+  }
+
+
+  // ---------- one gesture = one stop (a fast flick can't fly past the scenes) ----------
+  // stops: [{ y, fill }]; gaps longer than a screen get extra stops unless fill is false (inside a pinned scene)
+  function stepScroll(baseStops) {
+    gsap.registerPlugin(Observer, ScrollToPlugin);
+    let busy = false, fresh = true, lastT = 0, lastD = 0, movedAt = -1e9;
+    // the phone's own swipe scrolling would fly on alongside the steps; keep pinch zoom, let only the steps move the page
+    document.documentElement.style.touchAction = 'pinch-zoom';
+    document.documentElement.style.overscrollBehavior = 'none';
+    const stops = () => {
+      const max = ScrollTrigger.maxScroll(window);
+      const raw = [...baseStops(), { y: max }].map(s => ({ y: Math.round(gsap.utils.clamp(0, max, s.y)), fill: s.fill !== false }))
+        .sort((a, b) => a.y - b.y);
+      const step = innerHeight * .85, out = [raw[0]];
+      for (const s of raw.slice(1)) {
+        const prev = out[out.length - 1];
+        if (s.y - prev.y < 4) continue;
+        const n = prev.fill && s.y - prev.y > innerHeight * 1.25 ? Math.ceil((s.y - prev.y) / step) : 1;
+        for (let i = 1; i < n; i++) out.push({ y: Math.round(prev.y + (s.y - prev.y) * i / n), fill: true });
+        out.push(s);
+      }
+      return out.map(s => s.y);
+    };
+    // trackpad momentum fades smoothly; a new push comes after a pause or speeds up again (the Lethargy idea),
+    // so a small new push always counts and the momentum tail never chains extra steps
+    addEventListener('wheel', e => {
+      const d = Math.abs(e.deltaY);
+      // (a speed-up right after a move starts is the same swipe still ramping up)
+      if (e.timeStamp - lastT > 120 || (d > lastD * 1.3 + 2 && e.timeStamp - movedAt > 300)) fresh = true;
+      lastT = e.timeStamp; lastD = d;
+    }, { passive: true, capture: true });
+    const go = dir => {
+      if (busy || !fresh) return;
+      const y = scrollY, list = stops();
+      const to = dir > 0 ? list.find(v => v > y + 4) : list.reverse().find(v => v < y - 4);
+      if (to === undefined) return;
+      busy = true; fresh = false; movedAt = performance.now();
+      gsap.to(window, { scrollTo: { y: to, autoKill: false }, duration: gsap.utils.clamp(.6, 1.2, .45 + Math.abs(to - y) / innerHeight * .35),
+        ease: 'power2.inOut', onComplete: () => { busy = false; } });
+    };
+    Observer.create({ target: window, type: 'wheel,touch', wheelSpeed: -1, tolerance: 6, preventDefault: true,
+      onPress: () => { fresh = true; }, onUp: () => go(1), onDown: () => go(-1) });
+    addEventListener('keydown', e => {
+      if (e.target.closest('input, textarea, select, [contenteditable]')) return;
+      const space = e.key === ' ' && !e.target.closest('button, a, summary');
+      const dir = e.key === 'ArrowDown' || e.key === 'PageDown' || (space && !e.shiftKey) ? 1
+        : e.key === 'ArrowUp' || e.key === 'PageUp' || (space && e.shiftKey) ? -1 : 0;
+      if (!dir) return;
+      e.preventDefault(); fresh = true; go(dir);
+    });
+  }
+
+  // ---------- scroll ----------
+  gsap.registerPlugin(ScrollTrigger);
+  const mm = gsap.matchMedia();
+
+  // resting state for reduced motion: the shared vote with its results
+  const fillVotes = () => document.querySelectorAll('#sharedCard .opt').forEach(o => o.style.setProperty('--v', o.dataset.v + '%'));
+
+  mm.add('(prefers-reduced-motion: reduce)', () => { fillVotes(); gsap.set('#private', { display: 'none' }); });
+
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    const narrow = innerWidth <= 860;
+
+    // hero: phones arrive, float, then fan out as you leave
+    const ph = gsap.utils.toArray('#phones .phone');
+    // positions as percentages, set here: GSAP would otherwise read the CSS transforms as pixels,
+    // and inside an artifact the frame can still be 0 px wide when this runs
+    const HOME = [{ xPercent: -112, yPercent: -46, rotation: -9 }, { xPercent: -50, yPercent: -52, rotation: 0 }, { xPercent: 12, yPercent: -46, rotation: 9 }];
+    ph.forEach((p, i) => gsap.set(p, { x: 0, y: 0, ...HOME[i] }));
+    gsap.from(ph, { y: 220, opacity: 0, rotation: (i) => HOME[i].rotation + [-11, 0, 11][i], duration: 1.1, ease: 'back.out(1.4)', stagger: .12, delay: .15 });
+    gsap.from('.hero-copy > *', { y: 30, opacity: 0, duration: .7, ease: 'power3.out', stagger: .08 });
+    ph.forEach((p, i) => loop(gsap.to(p.firstElementChild, { y: i === 1 ? -12 : -8, duration: 1.6 + i * .3, ease: 'sine.inOut', yoyo: true, repeat: -1 })));
+    loop(gsap.to('#heroWheel', { rotation: 360 * 3 + 40, duration: 4, ease: 'power3.out', repeat: -1, repeatDelay: 1.6 }));
+    gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 } })
+      .to(ph[0], { xPercent: -142, rotation: -22, y: -60, ease: 'none' }, 0)
+      .to(ph[2], { xPercent: 42, rotation: 22, y: -60, ease: 'none' }, 0)
+      .to(ph[1], { y: -120, scale: .92, ease: 'none' }, 0)
+      .to('.hero-copy', { y: -60, opacity: .3, ease: 'none' }, 0);
+    if (finePointer) {
+      const box = document.getElementById('phones');
+      box.addEventListener('pointermove', e => {
+        const r = box.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        gsap.to(box, { rotationY: x * 14, rotationX: -y * 10, duration: .6, ease: 'power2.out' });
+      });
+      box.addEventListener('pointerleave', () => gsap.to(box, { rotationY: 0, rotationX: 0, duration: .8, ease: 'power2.out' }));
+    }
+
+    // story: one phone, the chat plays as you scroll
+    const steps = gsap.utils.toArray('.step');
+    const typing = document.getElementById('typing'), reply = document.getElementById('tandyReply');
+    gsap.set('#private', { y: 0, yPercent: 102 });  // hidden below the screen, in percent (see HOME above)
+    gsap.set('.s3, #private .p1, #private .p2, #share, #buildCard', { opacity: 0 });
+    gsap.set('.s3', { display: 'none' });
+    gsap.set('#bits b', { x: () => rand(-160, 160), y: () => rand(-260, 120), rotation: () => rand(-180, 180), scale: 0 });
+    gsap.set(typing.children, { y: 0 });
+    loop(gsap.to(typing.children, { y: -4, duration: .3, ease: 'steps(2)', yoyo: true, repeat: -1, stagger: .1 }));
+    const showStep = (n) => (tl, at) => steps.forEach((s, i) => tl.to(s, { opacity: i === n ? 1 : (narrow ? 0 : .22), duration: .3 }, at));
+
+    const tl = gsap.timeline({ scrollTrigger: { trigger: '#story', start: 'top top', end: '+=320%', pin: true, scrub: .8 } });
+    tl.from('.s1', { y: 30, opacity: 0, stagger: .4, duration: .5 })
+      .add(() => {}, '+=.3');
+    showStep(0)(tl, 0);
+    // 2 · tap the llama, private sheet slides up
+    tl.to('#dock', { scale: 1.3, duration: .2, yoyo: true, repeat: 1 }, 'ask')
+      .to('#private', { yPercent: 0, duration: .6, ease: 'power2.out' }, 'ask+=.3')
+      .to('#private .p1', { opacity: 1, y: 0, duration: .3 }, '>-0.05')
+      .to('#private .p2', { opacity: 1, duration: .3 }, '>')
+      .add(() => { typing.hidden = false; reply.hidden = true; }, '>')
+      .to('#bits b', { x: 0, y: 0, rotation: 0, scale: 1, duration: 1, stagger: { each: .015, from: 'random' }, ease: 'power3.out' }, '>')
+      .add(() => { const back = tl.scrollTrigger.direction < 0; typing.hidden = !back; reply.hidden = back; }, '>')
+      .to('#buildCard', { opacity: 1, duration: .3 }, '>')
+      .to('#bits b', { scale: 0, duration: .4, stagger: { each: .01, from: 'random' } }, '<')
+      .to('#share', { opacity: 1, y: 0, duration: .3 }, '>')
+      .to('#share', { scale: .9, duration: .15, yoyo: true, repeat: 1 }, '>+.2');
+    showStep(1)(tl, 'ask');
+    // 3 · shared to the group, everyone votes
+    tl.to('#private', { yPercent: 102, duration: .6, ease: 'power2.in' }, 'share')
+      .set('.s1:first-child', { display: 'none' }, 'share+=.6')
+      .set('.s3', { display: '' }, 'share+=.6')
+      .to('#sharedCard', { opacity: 1, scale: 1, duration: .4, ease: 'back.out(2)' }, 'share+=.6')
+      .from('#sharedCard', { scale: .6 }, '<');
+    document.querySelectorAll('#sharedCard .opt').forEach((o, i) => tl.fromTo(o, { '--v': '0%' }, { '--v': o.dataset.v + '%', duration: .6, ease: 'power2.out' }, `share+=${1 + i * .15}`));
+    tl.to('.reacts.s3', { opacity: 1, duration: .3 }, 'share+=1.6')
+      .from('.reacts.s3 span', { scale: 0, stagger: .1, ease: 'back.out(3)', duration: .3 }, '<')
+      .to('.msg.s3', { opacity: 1, duration: .3 }, 'share+=2')
+      .from('.msg.s3', { y: 20, duration: .3 }, '<')
+      .to({}, { duration: .5 });
+    showStep(2)(tl, 'share');
+
+    // shelf: sideways ride
+    const track = document.getElementById('track');
+    const dist = () => Math.max(0, track.scrollWidth - innerWidth + 64);
+    const ride = gsap.to(track, { x: () => -dist(), ease: 'none',
+      scrollTrigger: { trigger: '#shelf', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: .6, invalidateOnRefresh: true } });
+    gsap.utils.toArray('.tile').forEach((t, i) => {
+      gsap.from(t, { y: 80, rotation: i % 2 ? 8 : -8, ease: 'back.out(2)', duration: .6,
+        scrollTrigger: { trigger: t, containerAnimation: ride, start: 'left 95%', toggleActions: 'play none none reverse' } });
+    });
+
+    // soon: llama hops in, speech bubble pops
+    gsap.timeline({ scrollTrigger: { trigger: '#soon', start: 'top 70%', toggleActions: 'play none none reverse' } })
+      .from('#llama', { y: -200, opacity: 0, duration: .8, ease: 'bounce.out' })
+      .from('#say', { scale: 0, rotation: -12, duration: .45, ease: 'back.out(3)' }, '-=.2')
+      .from('.soon h2, .soon p, .soon .stores, .maker', { y: 30, opacity: 0, stagger: .08, duration: .5, ease: 'power3.out' }, '-=.3');
+    loop(gsap.to('#llama', { scaleY: 1.03, transformOrigin: '50% 100%', duration: 1.2, yoyo: true, repeat: -1, ease: 'sine.inOut' }));
+
+    const story = tl.scrollTrigger, ridden = ride.scrollTrigger;
+    const topOf = sel => document.querySelector(sel).getBoundingClientRect().top + scrollY;
+    stepScroll(() => [
+      { y: 0, fill: false },
+      { y: story.labelToScroll('ask'), fill: false },
+      { y: story.labelToScroll('share'), fill: false },
+      { y: story.end },
+      { y: ridden.start },
+      { y: ridden.end },
+      { y: topOf('#soon') },
+      { y: topOf('#faq') },
+    ]);
+
+    return () => {};
+  });
+})();
+</script>
+</body>
+</html>
