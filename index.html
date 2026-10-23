@@ -280,7 +280,10 @@ main { position: relative; z-index: 10; }
 .shelf-head { display: grid; gap: 10px; max-width: 1240px; width: 100%; margin-inline: auto; }
 .shelf-nav { display: flex; gap: 10px; margin-top: 4px; }
 .nav-btn { width: 48px; height: 44px; border: 3px solid var(--ink); background: var(--bg); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); font: 700 20px/1 var(--font-display); cursor: pointer; }
+.nav-btn { transition: transform .12s, box-shadow .12s, opacity .2s; }
+.nav-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
 .nav-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
+.nav-btn[aria-disabled="true"] { opacity: .35; cursor: default; transform: none; box-shadow: 3px 3px 0 var(--ink); }  /* at the end of the shelf */
 .track { cursor: grab; user-select: none; }
 .track:active { cursor: grabbing; }
 .track { display: flex; gap: 22px; width: max-content; padding-block: 16px 28px; }
@@ -318,7 +321,6 @@ main { position: relative; z-index: 10; }
 .qa[open] summary::after { content: "–"; }
 .qa p { margin: 0; padding: 0 18px 18px; color: var(--ink-2); }
 footer { position: relative; z-index: 10; text-align: center; padding-block: 8px calc(32px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 12px; justify-items: center; }
-.dev-note { margin: 0; font-size: 14px; color: var(--ink-2); max-width: 60ch; }
 .foot-links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 20px; font-size: 15px; font-weight: 500; }
 .foot-links a { color: var(--ink); font-weight: 700; text-underline-offset: 3px; padding-block: 6px; }
 
@@ -549,9 +551,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 8px
   </section>
 </main>
 <footer class="wrap">
-  <p class="dev-note">Tandy Messenger is in development: the examples show intended features.</p>
   <nav class="foot-links" aria-label="Site">
-    <span>Made with ❤️ by <a href="https://www.tandamn.com/">Tandamn!</a> · © 2026</span>
     <a href="accessibility.html">Accessibility</a>
     <a href="privacy.html">Site privacy</a>
     <a href="https://app.tandamn.com/privacy.html">App privacy</a>
@@ -690,8 +690,13 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 8px
     gsap.registerPlugin(Observer, ScrollToPlugin);
     const on = () => scrollY >= ride.start - 2 && scrollY <= ride.end + 2;
     const step = () => Math.min(400, innerWidth * .3);
-    const move = px => gsap.to(window, { scrollTo: { y: gsap.utils.clamp(ride.start, ride.end, scrollY + px), autoKill: true },
+    const clamp = y => gsap.utils.clamp(ride.start, ride.end, y);
+    const move = px => gsap.to(window, { scrollTo: { y: clamp(clamp(scrollY) + px), autoKill: true },
       duration: .6, ease: 'power2.out', overwrite: true });
+    const prev = document.getElementById('shelfPrev'), next = document.getElementById('shelfNext');
+    const sync = () => { prev.setAttribute('aria-disabled', String(scrollY <= ride.start + 2)); next.setAttribute('aria-disabled', String(scrollY >= ride.end - 2)); };
+    sync();
+    addEventListener('scroll', sync, { passive: true });
     const onWheel = e => { if (on() && Math.abs(e.deltaX) > Math.abs(e.deltaY)) { e.preventDefault(); scrollBy(0, e.deltaX); } };
     const onKey = e => {
       if (!on() || e.target.closest('input, textarea, select, [contenteditable]')) return;
@@ -702,7 +707,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 8px
     const drag = Observer.create({ target: '#track', type: 'pointer', dragMinimum: 6, onDrag: self => scrollBy(0, -self.deltaX) });
     return {
       move: dir => move(dir * step()),
-      kill: () => { removeEventListener('wheel', onWheel); removeEventListener('keydown', onKey); drag.kill(); },
+      kill: () => { removeEventListener('wheel', onWheel); removeEventListener('keydown', onKey); removeEventListener('scroll', sync); drag.kill(); },
     };
   }
 
@@ -734,8 +739,10 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 8px
 
   // the shelf arrows talk to whichever desktop setup is current
   let shelfNav = null;
-  document.getElementById('shelfNext').addEventListener('click', () => shelfNav && shelfNav.move(1));
-  document.getElementById('shelfPrev').addEventListener('click', () => shelfNav && shelfNav.move(-1));
+  const arrow = (id, dir) => document.getElementById(id).addEventListener('click', e => {
+    if (shelfNav && e.currentTarget.getAttribute('aria-disabled') !== 'true') shelfNav.move(dir);
+  });
+  arrow('shelfNext', 1); arrow('shelfPrev', -1);
 
   // One setup per screen size and motion preference. Crossing 860 px (resizing the window, turning a tablet)
   // reverts everything the old setup made, pins and scroll stepping included, and runs the right one.

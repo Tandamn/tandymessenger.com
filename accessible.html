@@ -8,25 +8,14 @@
 <link rel="canonical" href="https://tandymessenger.com/">
 <link rel="icon" type="image/png" href="assets/iconB.png">
 <style>
-:root { --bg: #ffffff; --ink: #1c3055; --ink-2: #3d4f72; --link: #2a4fa0; --line: #c9d3e3; --panel: #f2f5fa; --focus: #b3261e; color-scheme: light; --scale: 1; --leading: 1.6; }
+:root { --bg: #ffffff; --ink: #1c3055; --ink-2: #3d4f72; --link: #2a4fa0; --line: #c9d3e3; --panel: #f2f5fa; --focus: #b3261e; color-scheme: light; }
 @media (prefers-color-scheme: dark) { :root:not(.light) { --bg: #1b1932; --ink: #f7eed8; --ink-2: #d9cdf3; --link: #a9cdfe; --line: #4a4570; --panel: #262345; --focus: #fcb4b6; color-scheme: dark; } }
 :root.contrast { --bg: #000000; --ink: #ffffff; --ink-2: #ffffff; --link: #ffff00; --line: #ffffff; --panel: #000000; --focus: #ffff00; color-scheme: dark; }
 * { box-sizing: border-box; }
-html { font-size: calc(100% * var(--scale)); }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height: var(--leading); }
-:root.readable body { font-family: Verdana, Tahoma, Arial, sans-serif; letter-spacing: .02em; word-spacing: .08em; }
-:root.spacing { --leading: 2; }
-:root.spacing p, :root.spacing li { margin-bottom: 1.2em; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
 a { color: var(--link); }
-:root.links a { background: var(--link); color: var(--bg); padding: 0 .2em; text-decoration: underline; text-decoration-thickness: 2px; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .skip { position: absolute; left: -9999px; } .skip:focus { left: 1rem; top: .5rem; background: var(--bg); padding: .5rem 1rem; z-index: 10; }
-.tools { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 2px solid var(--line);
-  padding: .6rem max(1rem, env(safe-area-inset-right, 0px)) .6rem max(1rem, env(safe-area-inset-left, 0px)); }
-.tools-in { max-width: 70ch; margin-inline: auto; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
-.tools h2 { font-size: 1rem; margin: 0 .5rem 0 0; }
-.tools button { font: inherit; font-size: .95rem; min-height: 44px; padding: .3rem .8rem; color: var(--ink); background: var(--bg); border: 2px solid var(--ink); border-radius: .4rem; cursor: pointer; }
-.tools button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 main { max-width: 70ch; margin-inline: auto; padding: 1.5rem max(1rem, env(safe-area-inset-right, 0px)) 4rem max(1rem, env(safe-area-inset-left, 0px)); }
 h1 { font-size: 2rem; line-height: 1.2; margin: .5rem 0 1rem; }
 h2 { font-size: 1.4rem; line-height: 1.3; margin: 2rem 0 .5rem; }
@@ -35,6 +24,31 @@ h3 { font-size: 1.15rem; margin: 1.2rem 0 .3rem; }
 .back { display: inline-block; margin-top: .5rem; }
 footer { border-top: 2px solid var(--line); margin-top: 3rem; padding-top: 1rem; }
 footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+
+:root { --scale: 1; --leading: 1.6; --t-bg: #ffffff; --t-ink: #1c3055; --t-panel: #f2f5fa; --t-line: #c9d3e3; }
+@media (prefers-color-scheme: dark) { :root { --t-bg: #1b1932; --t-ink: #f7eed8; --t-panel: #262345; --t-line: #4a4570; } }
+html { font-size: calc(100% * var(--scale)); }
+body { line-height: var(--leading); }
+:root.contrast { --bg: #000000; --ink: #ffffff; --ink-2: #ffffff; --link: #ffff00; --accent: #ffff00; --line: #ffffff; --panel: #000000; --focus: #ffff00; color-scheme: dark;
+  --t-bg: #000000; --t-ink: #ffffff; --t-panel: #000000; --t-line: #ffffff; }
+:root.readable body, :root.readable .tools { font-family: Verdana, Tahoma, Arial, sans-serif; letter-spacing: .02em; word-spacing: .08em; }
+:root.spacing { --leading: 2; }
+:root.spacing p, :root.spacing li { margin-bottom: 1.2em; }
+:root.links a { background: var(--link, var(--accent)); color: var(--bg); padding: 0 .2em; text-decoration: underline; text-decoration-thickness: 2px; }
+/* the bar: its own colours, font and width, the same on every page */
+.tools { position: sticky; top: 0; z-index: 5; background: var(--t-panel); color: var(--t-ink); border-bottom: 2px solid var(--t-line);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.4;
+  padding: .6rem max(1rem, env(safe-area-inset-right, 0px)) .6rem max(1rem, env(safe-area-inset-left, 0px)); }
+.tools-in { max-width: 44rem; margin-inline: auto; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: flex-end; }
+.tools .tools-toggle { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: 0 1rem 0 .75rem; border: 0; border-radius: 999px;
+  background: var(--t-ink); color: var(--t-bg); font: inherit; font-size: .95rem; font-weight: 600; cursor: pointer; }
+.tools .tools-toggle svg { fill: currentColor; flex: none; }
+.tools .tools-toggle[aria-expanded="true"] { outline: 2px solid var(--t-ink); outline-offset: 2px; }
+.tools :focus-visible { outline: 3px solid var(--t-ink); outline-offset: 3px; }
+.tools-panel { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.tools-panel[hidden] { display: none; }
+.tools button:not(.tools-toggle) { font: inherit; font-size: .95rem; min-height: 44px; padding: .3rem .8rem; color: var(--t-ink); background: var(--t-bg); border: 2px solid var(--t-ink); border-radius: .4rem; cursor: pointer; }
+.tools button[aria-pressed="true"] { background: var(--t-ink); color: var(--t-bg); }
 </style>
 </head>
 <body>
@@ -100,7 +114,6 @@ footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .
 <p>Tandy Messenger is made by <a href="https://www.tandamn.com/">Tandamn!</a>, a small company that makes things worth a damn.</p>
 
 <footer>
-<p>Tandy Messenger is in development: the examples show intended features.</p>
 <p>Made with love by Tandamn! · © 2026</p>
 <ul>
 <li><a href="https://www.tandamn.com/">Tandamn!</a></li>

@@ -24,25 +24,30 @@ section + section { border-top: 2px solid var(--line); margin-top: 48px; padding
 .back { display: inline-block; margin-bottom: 24px; }
 .skip { position: absolute; left: -9999px; } .skip:focus { left: 16px; top: 8px; background: #fdd66c; color: #1c3055; padding: 8px 12px; }
 
-:root { --scale: 1; --leading: 1.6; }
+:root { --scale: 1; --leading: 1.6; --t-bg: #ffffff; --t-ink: #1c3055; --t-panel: #f2f5fa; --t-line: #c9d3e3; }
+@media (prefers-color-scheme: dark) { :root { --t-bg: #1b1932; --t-ink: #f7eed8; --t-panel: #262345; --t-line: #4a4570; } }
 html { font-size: calc(100% * var(--scale)); }
 body { line-height: var(--leading); }
-:root.contrast { --bg: #000000; --ink: #ffffff; --ink-2: #ffffff; --link: #ffff00; --accent: #ffff00; --line: #ffffff; --panel: #000000; --focus: #ffff00; color-scheme: dark; }
-:root.readable body { font-family: Verdana, Tahoma, Arial, sans-serif; letter-spacing: .02em; word-spacing: .08em; }
+:root.contrast { --bg: #000000; --ink: #ffffff; --ink-2: #ffffff; --link: #ffff00; --accent: #ffff00; --line: #ffffff; --panel: #000000; --focus: #ffff00; color-scheme: dark;
+  --t-bg: #000000; --t-ink: #ffffff; --t-panel: #000000; --t-line: #ffffff; }
+:root.readable body, :root.readable .tools { font-family: Verdana, Tahoma, Arial, sans-serif; letter-spacing: .02em; word-spacing: .08em; }
 :root.spacing { --leading: 2; }
 :root.spacing p, :root.spacing li { margin-bottom: 1.2em; }
 :root.links a { background: var(--link, var(--accent)); color: var(--bg); padding: 0 .2em; text-decoration: underline; text-decoration-thickness: 2px; }
-.tools { position: sticky; top: 0; z-index: 5; background: var(--panel, var(--bg)); border-bottom: 2px solid var(--line);
+/* the bar: its own colours, font and width, the same on every page */
+.tools { position: sticky; top: 0; z-index: 5; background: var(--t-panel); color: var(--t-ink); border-bottom: 2px solid var(--t-line);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.4;
   padding: .6rem max(1rem, env(safe-area-inset-right, 0px)) .6rem max(1rem, env(safe-area-inset-left, 0px)); }
-.tools-in { max-width: 72ch; margin-inline: auto; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: flex-end; }
+.tools-in { max-width: 44rem; margin-inline: auto; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: flex-end; }
 .tools .tools-toggle { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: 0 1rem 0 .75rem; border: 0; border-radius: 999px;
-  background: var(--ink); color: var(--bg); font: inherit; font-size: .95rem; font-weight: 600; cursor: pointer; }
+  background: var(--t-ink); color: var(--t-bg); font: inherit; font-size: .95rem; font-weight: 600; cursor: pointer; }
 .tools .tools-toggle svg { fill: currentColor; flex: none; }
-.tools .tools-toggle[aria-expanded="true"] { outline: 2px solid var(--ink); outline-offset: 2px; }
+.tools .tools-toggle[aria-expanded="true"] { outline: 2px solid var(--t-ink); outline-offset: 2px; }
+.tools :focus-visible { outline: 3px solid var(--t-ink); outline-offset: 3px; }
 .tools-panel { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
 .tools-panel[hidden] { display: none; }
-.tools button { font: inherit; font-size: .95rem; min-height: 44px; padding: .3rem .8rem; color: var(--ink); background: var(--bg); border: 2px solid var(--ink); border-radius: .4rem; cursor: pointer; }
-.tools button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.tools button:not(.tools-toggle) { font: inherit; font-size: .95rem; min-height: 44px; padding: .3rem .8rem; color: var(--t-ink); background: var(--t-bg); border: 2px solid var(--t-ink); border-radius: .4rem; cursor: pointer; }
+.tools button[aria-pressed="true"] { background: var(--t-ink); color: var(--t-bg); }
 </style>
 </head>
 <body>
@@ -64,17 +69,6 @@ body { line-height: var(--leading); }
 </section>
 <main id="main">
 <a class="back" href="/">← Back to the site</a>
-
-<section lang="he" dir="rtl">
-<h1>הצהרת נגישות</h1>
-<p>האתר Tandy Messenger נבנה כדי לעמוד בתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג-2013, ובתקן הישראלי ת"י 5568 ברמה AA. כבסיס טכני לבדיקות אנחנו משתמשים בהנחיות WCAG 2.2 ברמה AA.</p>
-<p><a href="accessible.html">גרסה נגישה של האתר</a>, עם אותו מידע וכלי תצוגה, מקושרת בראש כל עמוד.</p>
-<h2>מה נבדק</h2>
-<p>נבדק לאחרונה: 23.10.2026. היקף: כל עמודי האתר. נבדקו הפעלה במקלדת, ניגודיות צבעים, הפחתת תנועה ותצוגה במסכי טלפון ומחשב, במצב בהיר וכהה, בעזרת axe-core ובבדיקה ידנית בדפדפן Chrome. בדיקה עם קוראי מסך (VoiceOver, NVDA) עוד לפנינו.</p>
-<h2>פניות בנושא נגישות</h2>
-<p>נתקלתם בבעיה או צריכים עזרה? כתבו לנו: <a href="mailto:tandamn.app@gmail.com">tandamn.app@gmail.com</a></p>
-<p>Tandamn, company registration in Israel in progress</p>
-</section>
 
 <section lang="en" dir="ltr">
 <h1>Accessibility statement</h1>
