@@ -76,6 +76,7 @@
 @media (max-width: 600px) { .a11y-link { width: 44px; padding: 0; justify-content: center; } .a11y-link span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 .skip { position: absolute; left: -9999px; top: calc(env(safe-area-inset-top, 0px) + 8px); z-index: 100; padding: 10px 14px; background: #fdd66c; color: #1c3055; font-weight: 800; border: 3px solid #1c3055; }
 .skip:focus { left: max(16px, env(safe-area-inset-left, 0px)); }
+#content { scroll-margin-top: 40vh; }  /* the skip link's target stays in full view */
 html.still *, html.still *::before, html.still *::after { animation-play-state: paused !important; }
 .top-actions { display: flex; align-items: center; gap: 10px; }
 /* the smallest phones: the llama head alone, the name stays for screen readers */
@@ -381,7 +382,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 8px
 <canvas id="fx" aria-hidden="true"></canvas>
 <canvas id="wipe" aria-hidden="true"></canvas>
 
-<a class="skip" href="#top">Skip to content</a>
+<a class="skip" href="#content">Skip to content</a>
 <header class="top wrap">
   <a class="brandmark pixel" href="#top">
     <img class="for-light" src="assets/llamaHeadB.webp" alt="">
@@ -401,7 +402,7 @@ footer { position: relative; z-index: 10; text-align: center; padding-block: 8px
       <img class="wordmark for-light" src="assets/tandy-wordmark-light.webp" alt="Tandy Messenger logo" width="900" height="309" fetchpriority="high">
       <img class="wordmark for-dark" src="assets/tandy-wordmark-dark.webp" alt="Tandy Messenger logo" width="900" height="306">
       <p class="kicker pixel">The AI group chat app</p>
-      <h1><span class="sr">Tandy Messenger: </span>Group chats that <em>build things.</em></h1>
+      <h1 id="content" tabindex="-1"><span class="sr">Tandy Messenger: </span>Group chats that <em>build things.</em></h1>
       <p class="lede">Tandy is the AI llama in your group chat. Ask him for a checklist, a plan, a vote or a game, and it pops up for everyone, ready to use.</p>
       <div class="stores">
         <span class="store" aria-label="App Store, coming soon"><small>SOON ON THE</small><b>App Store</b></span>
