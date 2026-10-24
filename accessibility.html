@@ -11,7 +11,6 @@
 <style>
 @font-face { font-family: "Rubik"; font-style: normal; font-weight: 300 900; font-display: swap; src: url(fonts/rubik.woff2) format("woff2"); }
 :root { --bg: #f5f9fc; --ink: #1c3055; --ink-2: #3d4f72; --link: #2a4fa0; --line: #c9d3e3; --focus: #1c3055; color-scheme: light; }
-@media (prefers-color-scheme: dark) { :root { --bg: #23203d; --ink: #f7eed8; --ink-2: #d9cdf3; --link: #a9cdfe; --line: #4a4570; --focus: #f7eed8; color-scheme: dark; } }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-size: 1.125rem; font-family: "Rubik", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
 main { max-width: 70ch; margin-inline: auto; padding: 2rem max(1rem, env(safe-area-inset-right, 0px)) 4rem max(1rem, env(safe-area-inset-left, 0px)); }
@@ -29,7 +28,6 @@ main footer { border-top: 2px solid var(--line); margin-top: 3rem; padding-top: 
 main footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
 
 :root { --scale: 1; --leading: 1.6; --t-bg: #ffffff; --t-ink: #1c3055; --t-panel: #f2f5fa; --t-line: #c9d3e3; }
-@media (prefers-color-scheme: dark) { :root { --t-bg: #1b1932; --t-ink: #f7eed8; --t-panel: #262345; --t-line: #4a4570; } }
 html { font-size: calc(100% * var(--scale)); }
 body { line-height: var(--leading); }
 :root.contrast { --bg: #000000; --ink: #ffffff; --ink-2: #ffffff; --link: #ffff00; --accent: #ffff00; --line: #ffffff; --panel: #000000; --focus: #ffff00; color-scheme: dark;
